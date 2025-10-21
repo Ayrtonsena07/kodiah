@@ -1,0 +1,90 @@
+/* Container fixado no topo direito (responsivo) */
+.langwrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* Botão base – vidro/blur + contorno sutil + micro sombra */
+.lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .6rem .9rem;
+  border-radius: 999px;
+  border: 1px solid hsl(0 0% 100% / .08);
+  background: linear-gradient(to bottom right, hsl(0 0% 100% / .04), hsl(0 0% 100% / .02));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #e9edf1;
+  cursor: pointer;
+  transition: transform .18s ease, border-color .2s ease, background .3s ease;
+  will-change: transform;
+}
+
+.lang-btn:hover {
+  border-color: hsl(0 0% 100% / .18);
+  transform: translateY(-1px);
+}
+
+.lang-btn:active {
+  transform: translateY(0);
+}
+
+.lang-current {
+  font-size: .9rem;
+  letter-spacing: .2px;
+}
+
+/* setinha */
+.chev { transition: transform .18s ease; opacity: .75; }
+.chev.up { transform: rotate(180deg); }
+
+/* Popover – vidro com sombra difusa, borda suave e animação */
+.lang-pop {
+  position: absolute;
+  right: 0;
+  margin-top: .55rem;
+  min-width: 220px;
+  border-radius: 14px;
+  border: 1px solid hsl(0 0% 100% / .10);
+  background: linear-gradient(180deg, hsl(220 15% 8% / .65), hsl(220 15% 6% / .65));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 16px 40px -10px rgba(0,0,0,.45),
+    inset 0 1px 0 0 hsl(0 0% 100% / .06);
+  padding: .4rem;
+  animation: pop .12s ease-out;
+  z-index: 60;
+}
+
+@keyframes pop {
+  from { transform: translateY(-4px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+
+.lang-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .35rem;
+  align-items: baseline;
+  padding: .6rem .7rem;
+  border-radius: 10px;
+  color: #e9edf1;
+  text-decoration: none;
+  transition: background .18s ease, color .18s ease, transform .18s ease;
+  will-change: transform;
+}
+
+.lang-item:hover {
+  background: hsl(0 0% 100% / .06);
+  transform: translateX(1px);
+}
+
+.lang-item.active {
+  background: linear-gradient(180deg, hsl(200 92% 54% / .18), hsl(200 92% 54% / .10));
+  border: 1px solid hsl(200 92% 54% / .25);
+}
+
+.lang-label { font-weight: 600; letter-spacing: .2px; }
+.lang-native { opacity: .6; font-size: .85rem; }
