@@ -1,27 +1,27 @@
 import React from 'react';
 
 const t = {
-  heroTitle: <>Experiencias digitales inteligentes con <span style={{ color: '#6b7bff' }}>Kodiah</span></>,
-  heroSubtitle: 'Sitios modernos, automatizaciones y soluciones con IA para hacer crecer tu negocio.',
-  ctaQuote: 'Pedir presupuesto',
-  ctaServices: 'Ver servicios',
-  whatWeDo: 'Qué hacemos',
+  heroTitle: <>Expériences numériques intelligentes avec <span style={{ color: '#6b7bff' }}>Kodiah</span></>,
+  heroSubtitle: "Sites modernes, automatisations et solutions IA pour faire grandir votre entreprise.",
+  ctaQuote: 'Demander un devis',
+  ctaServices: 'Voir les services',
+  whatWeDo: 'Ce que nous faisons',
   cards: [
     {
-      title: 'Sitios web & Landing Pages',
-      body: 'Sitios rápidos y seguros con Next.js y Vercel — optimizados para SEO y conversión.',
+      title: 'Sites & Landing Pages',
+      body: 'Sites rapides et sécurisés avec Next.js et Vercel — optimisés pour le SEO et la conversion.',
     },
     {
-      title: 'Automatización de Procesos',
-      body: 'Reduce el trabajo manual con integraciones y automatizaciones a medida.',
+      title: 'Automatisation des Processus',
+      body: 'Réduisez le travail manuel grâce aux intégrations et automatisations sur mesure.',
     },
     {
       title: 'IA & Chatbots',
-      body: 'Lleva IA al contenido y las operaciones. Privado, seguro y personalizado.',
+      body: 'Apportez l’IA au contenu et aux opérations. Privé, sûr et personnalisé.',
     },
   ],
-  letsTalk: 'Hablemos',
-  emailUs: 'Envíanos un correo',
+  letsTalk: 'Discutons',
+  emailUs: 'Envoyez-nous un e-mail',
 };
 
 export default t;
