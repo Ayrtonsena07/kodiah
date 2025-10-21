@@ -1,103 +1,101 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main style={{ maxWidth: 1000, margin: '0 auto', padding: '48px 20px' }}>
+      {/* HERO */}
+      <section style={{ padding: '48px 0' }}>
+        <h1 style={{ fontSize: 40, lineHeight: 1.15, marginBottom: 16 }}>
+          Build intelligent digital experiences with <span style={{ color: '#6b7bff' }}>Kodiah</span>
+        </h1>
+        <p style={{ fontSize: 18, color: '#777', maxWidth: 720 }}>
+          We deliver modern websites, automations, and AI-driven solutions to help your business grow.
+        </p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+        <div style={{ marginTop: 24, display: 'flex', gap: 12 }}>
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#contact"
+            style={{
+              background: '#111',
+              color: '#fff',
+              padding: '12px 18px',
+              borderRadius: 8,
+              textDecoration: 'none',
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+            Get a quote
           </a>
           <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#services"
+            style={{
+              border: '1px solid #ddd',
+              padding: '12px 18px',
+              borderRadius: 8,
+              textDecoration: 'none',
+              color: '#111',
+              background: '#fff',
+            }}
           >
-            Read our docs
+            See services
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      </section>
+
+      {/* SERVICES */}
+      <section id="services" style={{ padding: '32px 0' }}>
+        <h2 style={{ fontSize: 28, marginBottom: 12 }}>What we do</h2>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: 16,
+          }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
+          <article style={{ border: '1px solid #eee', borderRadius: 12, padding: 16 }}>
+            <h3>Websites & Landing Pages</h3>
+            <p style={{ color: '#666' }}>
+              Fast, secure sites with Next.js and Vercel — optimized for SEO and conversion.
+            </p>
+          </article>
+          <article style={{ border: '1px solid #eee', borderRadius: 12, padding: 16 }}>
+            <h3>Process Automation</h3>
+            <p style={{ color: '#666' }}>
+              Reduce manual work with integrations and custom automations.
+            </p>
+          </article>
+          <article style={{ border: '1px solid #eee', borderRadius: 12, padding: 16 }}>
+            <h3>AI & Chatbots</h3>
+            <p style={{ color: '#666' }}>
+              Bring AI to support, content and operations. Private, safe and tailored.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section id="contact" style={{ padding: '40px 0' }}>
+        <h2 style={{ fontSize: 28, marginBottom: 12 }}>Let’s talk</h2>
+        <p style={{ color: '#666', marginBottom: 16 }}>
+          Tell us briefly what you need and we’ll get back with a proposal.
+        </p>
+
+        {/* Você pode trocar esse form por Formspree/EmailJS depois. Por enquanto, abre email. */}
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="mailto:hello@kodiah.com?subject=Project%20inquiry&body=Hi%20Kodiah,%20I’d%20like%20to%20discuss%20a%20project..."
+          style={{
+            display: 'inline-block',
+            background: '#111',
+            color: '#fff',
+            padding: '12px 18px',
+            borderRadius: 8,
+            textDecoration: 'none',
+          }}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
+          Email us
         </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </section>
+
+      <footer style={{ marginTop: 40, padding: '20px 0', color: '#999', fontSize: 14 }}>
+        © {new Date().getFullYear()} Kodiah — All rights reserved.
       </footer>
-    </div>
+    </main>
   );
 }
