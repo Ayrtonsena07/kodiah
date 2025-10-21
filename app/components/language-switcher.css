@@ -9,20 +9,17 @@ const LANGS: Lang[] = [
   { code: 'en', label: 'English',  href: '/'   },
   { code: 'es', label: 'Español',  href: '/es' },
   { code: 'fr', label: 'Français', href: '/fr' },
-  { code: 'pt', label: 'Português',href: '/pt' },
-  { code: 'ja', label: '日本語',      href: '/ja' },
+  { code: 'pt', label: 'Português', href: '/pt' },
+  { code: 'ja', label: '日本語', href: '/ja' },
 ];
 
 export default function LanguageSwitcher() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  // Fechar clicando fora / tecla ESC
   useEffect(() => {
     function onClickOutside(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     }
     function onEsc(e: KeyboardEvent) {
       if (e.key === 'Escape') setOpen(false);
@@ -35,13 +32,9 @@ export default function LanguageSwitcher() {
     };
   }, []);
 
-  const current =
-    (typeof window !== 'undefined' &&
-      (location.pathname.split('/')[1] as Lang['code'])) || 'en';
-
-  const currentLang =
-    LANGS.find((l) => (current === '' ? 'en' : current) === l.code) ||
-    LANGS.find((l) => l.code === 'en')!;
+  const segment = (typeof window !== 'undefined' && location.pathname.split('/')[1]) || '';
+  const currentCode = (segment === '' ? 'en' : (segment as Lang['code']));
+  const currentLang = LANGS.find(l => l.code === currentCode) || LANGS[1]; // fallback en
 
   return (
     <div ref={ref} style={{ position: 'relative', display: 'inline-block' }}>
@@ -49,7 +42,7 @@ export default function LanguageSwitcher() {
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => setOpen(v => !v)}
         style={{
           display: 'inline-flex',
           alignItems: 'center',
@@ -63,20 +56,10 @@ export default function LanguageSwitcher() {
           outline: 'none',
         }}
       >
-        {/* Ícone globo (aspas retas e bem fechadas) */}
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-        >
+        {/* Globo (aspas R-E-T-A-S) */}
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <circle cx="12" cy="12" r="9" stroke="currentColor" opacity="0.6" />
-          <path
-            d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"
-            stroke="currentColor"
-            opacity="0.6"
-          />
+          <path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" stroke="currentColor" opacity="0.6" />
         </svg>
         <span style={{ fontSize: 14 }}>{currentLang.label}</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -98,10 +81,9 @@ export default function LanguageSwitcher() {
             border: '1px solid rgba(255,255,255,0.12)',
             boxShadow: '0 12px 40px rgba(0,0,0,0.4)',
             backdropFilter: 'blur(8px)',
-            overflow: 'hidden',
           }}
         >
-          {LANGS.map((lang) => {
+          {LANGS.map(lang => {
             const isActive = lang.code === currentLang.code;
             return (
               <a
@@ -120,12 +102,8 @@ export default function LanguageSwitcher() {
                   border: isActive ? '1px solid rgba(88,101,242,0.35)' : '1px solid transparent',
                   transition: 'background .15s ease, border-color .15s ease, transform .12s ease',
                 }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-1px)';
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(0)';
-                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-1px)'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(0)'; }}
               >
                 <span
                   aria-hidden="true"
