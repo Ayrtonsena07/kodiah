@@ -1,27 +1,27 @@
 import React from 'react';
 
 const t = {
-  heroTitle: <>Experiencias digitales inteligentes con <span style={{ color: '#6b7bff' }}>Kodiah</span></>,
-  heroSubtitle: 'Sitios modernos, automatizaciones y soluciones con IA para hacer crecer tu negocio.',
-  ctaQuote: 'Pedir presupuesto',
-  ctaServices: 'Ver servicios',
-  whatWeDo: 'Qué hacemos',
+  heroTitle: <>Build intelligent digital experiences with <span style={{ color: '#6b7bff' }}>Kodiah</span></>,
+  heroSubtitle: 'We deliver modern websites, automations, and AI-driven solutions to help your business grow.',
+  ctaQuote: 'Get a quote',
+  ctaServices: 'See services',
+  whatWeDo: 'What we do',
   cards: [
     {
-      title: 'Sitios web & Landing Pages',
-      body: 'Sitios rápidos y seguros con Next.js y Vercel — optimizados para SEO y conversión.',
+      title: 'Websites & Landing Pages',
+      body: 'Fast, secure sites with Next.js and Vercel — optimized for SEO and conversion.',
     },
     {
-      title: 'Automatización de Procesos',
-      body: 'Reduce el trabajo manual con integraciones y automatizaciones a medida.',
+      title: 'Process Automation',
+      body: 'Reduce manual work with integrations and custom automations.',
     },
     {
-      title: 'IA & Chatbots',
-      body: 'Lleva IA a contenido y operaciones. Privado, seguro y a medida.',
+      title: 'AI & Chatbots',
+      body: 'Bring AI to support content and operations. Private, safe and tailored.',
     },
   ],
-  letsTalk: 'Hablemos',
-  emailUs: 'Envíanos un correo',
+  letsTalk: "Let's talk",
+  emailUs: 'Email us',
 };
 
 export default t;
