@@ -1,9 +1,8 @@
-'use client'
+'use client';
 
-import { useEffect, useRef, useState } from 'react'
-import './language-switcher.css'
+import { useEffect, useRef, useState } from 'react';
 
-type Lang = { code: string; label: string; href: string }
+type Lang = { code: 'de' | 'en' | 'es' | 'fr' | 'pt' | 'ja'; label: string; href: string };
 
 const LANGS: Lang[] = [
   { code: 'de', label: 'Deutsch', href: '/de' },
@@ -12,52 +11,55 @@ const LANGS: Lang[] = [
   { code: 'fr', label: 'Français', href: '/fr' },
   { code: 'pt', label: 'Português', href: '/pt' },
   { code: 'ja', label: '日本語', href: '/ja' },
-]
+];
 
 export default function LanguageSwitcher() {
-  const [open, setOpen] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const path =
-    typeof window !== 'undefined' ? window.location.pathname : '/'
-  const current =
-    LANGS.find(l => l.href === path) || LANGS.find(l => l.code === 'en')!
-
-  // fecha ao clicar fora / tecla ESC
+  // fecha ao clicar fora e ao pressionar ESC
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node))
-        setOpen(false)
+    function onClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     }
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false)
+    function onEsc(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false);
     }
-    document.addEventListener('click', handleClickOutside)
-    document.addEventListener('keydown', handleEsc)
+    document.addEventListener('click', onClickOutside);
+    document.addEventListener('keydown', onEsc);
     return () => {
-      document.removeEventListener('click', handleClickOutside)
-      document.removeEventListener('keydown', handleEsc)
+      document.removeEventListener('click', onClickOutside);
+      document.removeEventListener('keydown', onEsc);
+    };
+  }, []);
+
+  // idioma atual pela URL
+  const current =
+    LANGS.find((l) =>
+      l.code === 'en' ? location.pathname === '/' : location.pathname.startsWith(`/${l.code}`)
+    ) ?? LANGS[1]; // default: en
+
+  function go(href: string) {
+    if (href === '/') {
+      location.href = '/';
+    } else {
+      location.href = href;
     }
-  }, [])
+  }
 
   return (
-    <div className="lang" ref={ref}>
+    <div ref={ref} className="relative">
+      {/* Botão */}
       <button
-        className="lang__trigger"
-        aria-haspopup="menu"
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-zinc-200 backdrop-blur transition hover:bg-white/10"
+        aria-haspopup="listbox"
         aria-expanded={open}
-        onClick={() => setOpen(v => !v)}
       >
+        {/* Ícone globo */}
         <svg
-          className="lang__icon"
-          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
           viewBox="0 0 24 24"
-        >
-          <path
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.6"
-            d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 0c2.5 2.4 2.5 17.6 0 20m0-20C9.5 4.4 9.5 19.6 12 22m-8.66-6h17.32M3.34 8h17.32"
-          />
-        </svg>
-        <span className="l
+          className="text-zinc-300"
+          fill="
