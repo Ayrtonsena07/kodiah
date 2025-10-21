@@ -1,35 +1,119 @@
-.lang-wrap { position: relative; }
-
-.lang-trigger {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 12px; border-radius: 9999px;
-  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.09);
-  color: #eaeaea; font-size: 14px; line-height: 1; cursor: pointer;
-  transition: background .2s, border-color .2s, box-shadow .2s, transform .08s;
+/* Container */
+.lang-switcher {
+  position: relative;
+  display: inline-block;
+  z-index: 50;
 }
-.lang-trigger:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.16); }
-.lang-trigger:active { transform: translateY(1px); }
-.lang-trigger .chev { opacity: .7; }
 
-.lang-menu {
-  position: absolute; right: 0; top: calc(100% + 8px); min-width: 240px;
-  background: linear-gradient(180deg, rgba(20,20,24,.96), rgba(12,12,16,.96));
-  border: 1px solid rgba(255,255,255,.08); border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06);
-  padding: 8px; backdrop-filter: blur(10px); z-index: 50;
+/* Botão que abre o menu */
+.ls-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 9999px;
+  background: var(--ls-bg);
+  border: 1px solid var(--ls-border);
+  color: inherit;
+  cursor: pointer;
+  backdrop-filter: saturate(120%) blur(6px);
+  transition: background .15s ease, border-color .15s ease, transform .12s ease;
 }
-.lang-menu li { list-style: none; }
-.lang-menu a {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 12px 14px; border-radius: 12px;
-  color: #d7d7d7; text-decoration: none; font-size: 15px;
-  transition: background .2s, color .2s, transform .05s;
-}
-.lang-menu a:hover { background: rgba(120,120,255,.12); color: #fff; }
-.lang-menu a.is-active { background: rgba(120,120,255,.18); color: #fff; border: 1px solid rgba(140,140,255,.28); }
 
-.pill {
-  font-size: 11px; padding: 4px 8px; border-radius: 9999px;
-  background: rgba(120,120,255,.18); color: #cfd3ff;
-  border: 1px solid rgba(140,140,255,.35);
+.ls-trigger:hover { transform: translateY(-1px); }
+.ls-trigger:active { transform: translateY(0); }
+.ls-trigger:focus-visible {
+  outline: 2px solid #5865f2;
+  outline-offset: 2px;
+}
+.ls-trigger-label { font-size: 14px; }
+
+/* Popover / lista */
+.ls-popover {
+  position: absolute;
+  right: 0;
+  margin-top: 10px;
+  width: 260px;
+  padding: 10px;
+  border-radius: 16px;
+  background: var(--ls-popover);
+  border: 1px solid var(--ls-border);
+  box-shadow: 0 12px 40px rgba(0,0,0,.4);
+  backdrop-filter: blur(8px);
+  animation: ls-fade .14s ease-out;
+}
+
+@keyframes ls-fade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Item da lista */
+.ls-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid transparent;
+  transition: background .15s, border-color .15s, transform .12s;
+}
+
+.ls-item:hover {
+  transform: translateY(-1px);
+  background: var(--ls-hover);
+}
+
+.ls-item[aria-current="true"] {
+  background: rgba(88,101,242,.16);
+  border-color: rgba(88,101,242,.35);
+}
+
+/* Badge com o código (opcional — se não quiser, pode esconder) */
+.ls-badge {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  align-items: center;
+  justify-content: center;
+  background: var(--ls-badge);
+  border: 1px solid var(--ls-border);
+  font-size: 12px;
+  letter-spacing: .5px;
+  opacity: .9;
+}
+
+.ls-item-label { font-size: 16px; }
+
+/* Etiqueta "Current" */
+.ls-current {
+  margin-left: auto;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(88,101,242,.18);
+  border: 1px solid rgba(88,101,242,.45);
+}
+
+/* Paleta – Dark/Light support */
+:root {
+  --ls-bg: rgba(255,255,255,.06);
+  --ls-popover: rgba(13,13,18,.95);
+  --ls-border: rgba(255,255,255,.12);
+  --ls-hover: rgba(255,255,255,.06);
+  --ls-badge: rgba(255,255,255,.06);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --ls-bg: rgba(0,0,0,.04);
+    --ls-popover: #ffffff;
+    --ls-border: rgba(0,0,0,.08);
+    --ls-hover: rgba(0,0,0,.04);
+    --ls-badge: rgba(0,0,0,.05);
+  }
+  .ls-popover { box-shadow: 0 12px 32px rgba(0,0,0,.15); }
 }
