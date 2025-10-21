@@ -1,0 +1,126 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
+type Lang = { code: 'en' | 'pt' | 'fr'; label: string; href: string };
+
+const LANGS: Lang[] = [
+  { code: 'en', label: 'English',   href: '/'   },
+  { code: 'pt', label: 'Português', href: '/pt' },
+  { code: 'fr', label: 'Français',  href: '/fr' },
+];
+
+export default function LanguageSwitcher() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // fecha ao clicar fora
+  useEffect(() => {
+    function onClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    function onEsc(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false);
+    }
+    document.addEventListener('mousedown', onClickOutside);
+    document.addEventListener('keydown', onEsc);
+    return () => {
+      document.removeEventListener('mousedown', onClickOutside);
+      document.removeEventListener('keydown', onEsc);
+    };
+  }, []);
+
+  // Detecta idioma atual só pelo path base (/, /pt, /fr)
+  const current =
+    typeof window !== 'undefined'
+      ? window.location.pathname.startsWith('/pt')
+        ? LANGS[1]
+        : window.location.pathname.startsWith('/fr')
+        ? LANGS[2]
+        : LANGS[0]
+      : LANGS[0];
+
+  return (
+    <div ref={ref} style={styles.wrapper}>
+      <button
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        style={styles.button}
+      >
+        {/* “Globo” simples (poderia trocar por SVG se quiser) */}
+        <span style={{ fontSize: 18, marginRight: 8 }}>🌐</span>
+        <span>{current.label}</span>
+        <svg
+          width="16" height="16" viewBox="0 0 20 20" fill="none"
+          style={{ marginLeft: 8, transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform .15s' }}
+        >
+          <path d="M5 7l5 6 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+
+      {open && (
+        <div role="menu" aria-label="Select language" style={styles.menu}>
+          {LANGS.map((lang) => (
+            <a
+              key={lang.code}
+              href={lang.href}
+              role="menuitem"
+              style={{
+                ...styles.item,
+                fontWeight: lang.code === current.code ? 600 : 400,
+              }}
+              onClick={() => setOpen(false)}
+            >
+              {lang.label}
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ===== estilos inline minimalistas ===== */
+
+const styles: Record<string, React.CSSProperties> = {
+  wrapper: { position: 'relative' },
+  button: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '10px 14px',
+    background: '#eef8e5',         // leve “verde” claro (troque se quiser)
+    border: '1px solid #cfe7b8',
+    color: '#0f172a',
+    borderRadius: 999,
+    cursor: 'pointer',
+    lineHeight: 1,
+    fontSize: 14,
+    boxShadow: '0 1px 2px rgba(0,0,0,.06)',
+    transition: 'background .15s, box-shadow .15s, border-color .15s',
+  },
+  menu: {
+    position: 'absolute',
+    top: 'calc(100% + 8px)',
+    right: 0,
+    minWidth: 220,
+    background: '#fff',
+    borderRadius: 14,
+    boxShadow:
+      '0 8px 20px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.06)',
+    padding: '8px 0',
+    border: '1px solid #eaeaea',
+    zIndex: 20,
+    animation: 'fadeIn .12s ease-out',
+  },
+  item: {
+    display: 'block',
+    padding: '10px 16px',
+    color: '#0f172a',
+    textDecoration: 'none',
+    fontSize: 15,
+  },
+};
