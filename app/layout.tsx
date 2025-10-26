@@ -1,5 +1,6 @@
 import "./globals.css";
 import Image from "next/image";
+import LanguageSelector from "./LanguageSelector";
 
 export const metadata = {
   title: "Kodiah — From idea to product",
@@ -18,11 +19,14 @@ export default function RootLayout({
         style={{
           minHeight: "100vh",
           background:
+            // fundo escuro com brilho dourado leve
             "radial-gradient(circle at 20% 20%, rgba(246,226,122,0.07) 0%, rgba(0,0,0,0) 60%), radial-gradient(circle at 80% 20%, rgba(199,146,47,0.07) 0%, rgba(0,0,0,0) 60%), linear-gradient(#0a0f1c 0%, #1a2235 100%)",
           color: "white",
           WebkitFontSmoothing: "antialiased",
           fontFamily:
             'system-ui, -apple-system, BlinkMacSystemFont, "Inter", "Roboto", "Segoe UI", sans-serif',
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         {/* HEADER */}
@@ -46,7 +50,14 @@ export default function RootLayout({
             }}
           >
             {/* LOGO E NOME */}
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              {/* sua logo oficial */}
               <Image
                 src="/logo.png"
                 alt="Kodiah Logo"
@@ -70,23 +81,18 @@ export default function RootLayout({
               </span>
             </div>
 
-            {/* BOTÕES À DIREITA */}
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <button
-                style={{
-                  fontSize: "13px",
-                  lineHeight: "16px",
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  borderRadius: "999px",
-                  color: "white",
-                  padding: "6px 10px",
-                  cursor: "pointer",
-                }}
-              >
-                🌍 EN ▾
-              </button>
+            {/* LADO DIREITO DO HEADER */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+              }}
+            >
+              {/* seletor de idioma dropdown */}
+              <LanguageSelector />
 
+              {/* botão dourado */}
               <button
                 style={{
                   fontSize: "13px",
@@ -113,10 +119,17 @@ export default function RootLayout({
         <main
           style={{
             maxWidth: "1280px",
+            width: "100%",
             margin: "0 auto",
             padding: "48px 24px 80px",
+            flex: "1 0 auto",
           }}
         >
+          {/*
+            Tudo que está na home (o título "Shape your vision into reality",
+            o campo de texto, etc) aparece aqui via page.tsx.
+            Não mexe aqui agora.
+          */}
           {children}
         </main>
 
@@ -128,6 +141,7 @@ export default function RootLayout({
             padding: "32px 24px 64px",
             background:
               "radial-gradient(circle at 20% 20%, rgba(246,226,122,0.06) 0%, rgba(0,0,0,0) 60%), rgba(0,0,0,0.1)",
+            flexShrink: 0,
           }}
         >
           <div
@@ -142,9 +156,15 @@ export default function RootLayout({
               gap: "6px",
             }}
           >
-            <div style={{ fontWeight: 500, color: "rgba(255,255,255,0.8)" }}>
+            <div
+              style={{
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.8)",
+              }}
+            >
               Kodiah — Intelligence has a new signature.
             </div>
+
             <div style={{ color: "rgba(255,255,255,0.5)" }}>
               © {new Date().getFullYear()} Kodiah Inc. All rights reserved.
             </div>
