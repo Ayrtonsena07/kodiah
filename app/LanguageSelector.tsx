@@ -19,7 +19,7 @@ export default function LanguageSelector() {
 
   return (
     <div style={{ position: "relative" }}>
-      {/* Botão: só o globo em traço branco, sem texto */}
+      {/* Botão globo */}
       <button
         onClick={() => setOpen(!open)}
         style={{
@@ -38,7 +38,7 @@ export default function LanguageSelector() {
         }}
         aria-label="Change language"
       >
-        {/* Ícone de globo (somente linhas) */}
+        {/* ícone globo em traço */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -56,7 +56,6 @@ export default function LanguageSelector() {
         </svg>
       </button>
 
-      {/* Dropdown */}
       {open && (
         <div
           style={{
