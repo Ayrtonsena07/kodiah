@@ -1,0 +1,90 @@
+/* ===== KODIAH GLOBAL STYLES ===== */
+
+/* Reset básico pra deixar o site limpo e moderno */
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fundo padrão do body caso o React ainda não tenha carregado */
+body {
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(246, 226, 122, 0.07) 0%,
+      rgba(0, 0, 0, 0) 60%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(199, 146, 47, 0.07) 0%,
+      rgba(0, 0, 0, 0) 60%
+    ),
+    linear-gradient(#0a0f1c 0%, #1a2235 100%);
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", "Roboto",
+    "Segoe UI", sans-serif;
+  line-height: 1.4;
+}
+
+/* Tipografia geral */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.03em;
+}
+
+p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+/* Utilidades que o layout.tsx usa (não Tailwind ainda) */
+header {
+  backdrop-filter: blur(12px);
+}
+
+/* Botões dourados */
+.k-btn-gold {
+  background: linear-gradient(90deg, #f6e27a 0%, #c7922f 100%);
+  color: #000;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 0 20px rgba(246, 226, 122, 0.4);
+  border: none;
+  cursor: pointer;
+}
+.k-btn-gold:hover {
+  filter: brightness(1.1);
+}
+
+/* Cartões de benefício */
+.k-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 20px;
+  color: #fff;
+}
+
+.k-card-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.k-card-desc {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.3rem;
+}
