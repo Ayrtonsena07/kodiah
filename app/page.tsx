@@ -1,118 +1,104 @@
+"use client";
+
+import { useLanguage } from "./LanguageContext";
+
 export default function HomePage() {
+  const { t } = useLanguage();
+
   return (
-    <section
-      style={{
-        maxWidth: "780px",
-        color: "white",
-        display: "flex",
-        flexDirection: "column",
-        gap: "24px",
-      }}
-    >
-      {/* HERO / TÍTULO */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <h1
-          style={{
-            fontSize: "32px",
-            lineHeight: "1.15",
-            fontWeight: 600,
-            letterSpacing: "-0.04em",
-            color: "white",
-          }}
-        >
-          Shape your vision into{" "}
-          <span
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg,#F6E27A 0%,#C7922F 60%,#8a5b15 100%)",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-              textShadow:
-                "0 0 20px rgba(246,226,122,0.4),0 0 60px rgba(199,146,47,0.2)",
-            }}
-          >
-            reality.
-          </span>
-        </h1>
-
-        <p
-          style={{
-            fontSize: "16px",
-            lineHeight: "1.5rem",
-            color: "rgba(255,255,255,0.7)",
-            maxWidth: "600px",
-          }}
-        >
-          Tell Kodiah what you want. We build intelligent, connected
-          applications — fast, reliable, and beautifully designed. No code
-          needed.
-        </p>
-      </div>
-
-      {/* BLOCO DE INPUT “FAÇA ISSO PRA MIM” */}
-      <div
+    <div style={{ color: "white", maxWidth: "800px" }}>
+      {/* TITULO */}
+      <h1
         style={{
-          background: "rgba(0,0,0,0.4)",
-          border: "1px solid rgba(255,255,255,0.15)",
-          borderRadius: "16px",
-          padding: "20px",
-          backdropFilter: "blur(12px)",
-          maxWidth: "600px",
-          boxShadow:
-            "0 30px 80px rgba(0,0,0,0.8),0 0 60px rgba(199,146,47,0.15)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "12px",
+          fontSize: "32px",
+          lineHeight: "1.2",
+          fontWeight: 600,
+          letterSpacing: "-0.04em",
+          background:
+            "radial-gradient(circle at 0% 0%, #fff 0%, #d4c07a 40%, #c7922f 80%)",
+          WebkitBackgroundClip: "text",
+          color: "transparent",
+          textShadow:
+            "0 0 30px rgba(246,226,122,0.4), 0 0 80px rgba(199,146,47,0.25)",
+          maxWidth: "20ch",
+          marginBottom: "16px",
         }}
       >
-        <label
+        {t.heroHeadline}
+      </h1>
+
+      {/* SUBTEXTO */}
+      <p
+        style={{
+          fontSize: "16px",
+          lineHeight: "1.5",
+          color: "rgba(255,255,255,0.7)",
+          maxWidth: "50ch",
+          marginBottom: "24px",
+        }}
+      >
+        {t.heroSub}
+      </p>
+
+      {/* BLOCO DE INPUT / CTA */}
+      <div
+        style={{
+          background:
+            "radial-gradient(circle at 50% 0%, rgba(246,226,122,0.08) 0%, rgba(0,0,0,0) 70%), rgba(20,20,20,0.6)",
+          boxShadow:
+            "0 30px 100px rgba(0,0,0,0.8), 0 0 120px rgba(199,146,47,0.25)",
+          border: "1px solid rgba(255,255,255,0.15)",
+          borderRadius: "12px",
+          padding: "16px",
+          marginBottom: "32px",
+          width: "100%",
+          maxWidth: "560px",
+        }}
+      >
+        <div
           style={{
             fontSize: "13px",
-            fontWeight: 500,
             color: "rgba(255,255,255,0.6)",
+            marginBottom: "8px",
           }}
         >
           Tell Kodiah what to build:
-        </label>
+        </div>
 
         <div
           style={{
             display: "flex",
-            flexDirection: "row",
             gap: "8px",
-            flexWrap: "wrap",
           }}
         >
           <input
+            defaultValue={t.promptPlaceholder}
             style={{
-              flex: "1",
-              minWidth: "220px",
-              background: "rgba(0,0,0,0.6)",
-              border: "1px solid rgba(255,255,255,0.22)",
-              borderRadius: "12px",
-              padding: "12px 14px",
+              flex: 1,
+              backgroundColor: "rgba(0,0,0,0.4)",
+              color: "#fff",
+              borderRadius: "8px",
+              border: "1px solid rgba(255,255,255,0.15)",
               fontSize: "14px",
-              lineHeight: "16px",
-              color: "white",
+              lineHeight: "20px",
+              padding: "10px 12px",
               outline: "none",
             }}
-            placeholder="Build me an appointment app that takes payments"
           />
-
           <button
             style={{
               background:
-                "linear-gradient(90deg,#F6E27A 0%,#C7922F 100%)",
+                "radial-gradient(circle at 40% 0%, #F6E27A 0%, #C7922F 60%)",
               color: "#000",
-              fontSize: "14px",
               fontWeight: 500,
-              borderRadius: "12px",
-              padding: "12px 16px",
+              borderRadius: "8px",
               border: "0",
+              fontSize: "14px",
+              lineHeight: "20px",
+              padding: "10px 12px",
               cursor: "pointer",
               boxShadow:
-                "0 0 20px rgba(246,226,122,0.5),0 0 60px rgba(199,146,47,0.3)",
-              whiteSpace: "nowrap",
+                "0 10px 40px rgba(246,226,122,0.5),0 0 80px rgba(199,146,47,0.4)",
             }}
           >
             Generate
@@ -122,112 +108,64 @@ export default function HomePage() {
         <div
           style={{
             fontSize: "12px",
-            lineHeight: "16px",
-            color: "rgba(255,255,255,0.4)",
+            color: "rgba(255,255,255,0.45)",
+            marginTop: "8px",
           }}
         >
           Private beta — limited seats.
         </div>
       </div>
 
-      {/* 3 BENEFÍCIOS / POR QUE VOCÊ É MELHOR QUE BASE44 */}
+      {/* 3 BLOQUINHOS DE VALOR */}
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))",
+          display: "flex",
           gap: "16px",
-          maxWidth: "780px",
-          marginTop: "24px",
+          flexWrap: "wrap",
+          maxWidth: "800px",
         }}
       >
-        <div
-          style={{
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: "16px",
-            padding: "16px",
-          }}
-        >
-          <div
-            style={{
-              color: "white",
-              fontSize: "15px",
-              fontWeight: 500,
-              marginBottom: "6px",
-            }}
-          >
-            Built with AI
-          </div>
-          <div
-            style={{
-              fontSize: "13px",
-              lineHeight: "18px",
-              color: "rgba(255,255,255,0.6)",
-            }}
-          >
-            You describe the product. Kodiah drafts it in minutes.
-          </div>
-        </div>
-
-        <div
-          style={{
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: "16px",
-            padding: "16px",
-          }}
-        >
-          <div
-            style={{
-              color: "white",
-              fontSize: "15px",
-              fontWeight: 500,
-              marginBottom: "6px",
-            }}
-          >
-            Refined by humans
-          </div>
-          <div
-            style={{
-              fontSize: "13px",
-              lineHeight: "18px",
-              color: "rgba(255,255,255,0.6)",
-            }}
-          >
-            Our team polishes flows, UI and data model for real business use.
-          </div>
-        </div>
-
-        <div
-          style={{
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: "16px",
-            padding: "16px",
-          }}
-        >
-          <div
-            style={{
-              color: "white",
-              fontSize: "15px",
-              fontWeight: 500,
-              marginBottom: "6px",
-            }}
-          >
-            Ready to sell
-          </div>
-          <div
-            style={{
-              fontSize: "13px",
-              lineHeight: "18px",
-              color: "rgba(255,255,255,0.6)",
-            }}
-          >
-            Hosting, login, dashboard, payments. You don’t just “test” — you
-            launch.
-          </div>
-        </div>
+        <FeatureCard title={t.badgeAiTitle} desc={t.badgeAiDesc} />
+        <FeatureCard title={t.badgeTeamTitle} desc={t.badgeTeamDesc} />
+        <FeatureCard title={t.badgeLaunchTitle} desc={t.badgeLaunchDesc} />
       </div>
-    </section>
+    </div>
+  );
+}
+
+function FeatureCard({ title, desc }: { title: string; desc: string }) {
+  return (
+    <div
+      style={{
+        flex: "1 1 200px",
+        minWidth: "200px",
+        backgroundColor: "rgba(0,0,0,0.4)",
+        border: "1px solid rgba(255,255,255,0.12)",
+        borderRadius: "10px",
+        padding: "16px",
+        boxShadow:
+          "0 20px 60px rgba(0,0,0,0.8), 0 0 80px rgba(0,0,0,0.6)",
+      }}
+    >
+      <div
+        style={{
+          fontSize: "14px",
+          fontWeight: 600,
+          color: "rgba(255,255,255,0.9)",
+          marginBottom: "6px",
+        }}
+      >
+        {title}
+      </div>
+      <div
+        style={{
+          fontSize: "13px",
+          lineHeight: "18px",
+          color: "rgba(255,255,255,0.6)",
+        }}
+      >
+        {desc}
+      </div>
+    </div>
   );
 }
