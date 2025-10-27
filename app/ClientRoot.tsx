@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { LanguageProvider, useLanguage } from "./LanguageContext";
+import LanguageSelector from "./LanguageSelector";
+import MouseGlow from "./MouseGlow";
 
 function Header() {
   const { t } = useLanguage();
@@ -13,6 +15,8 @@ function Header() {
         borderBottom: "1px solid rgba(255,255,255,0.08)",
         background: "rgba(0,0,0,0.3)",
         backdropFilter: "blur(12px)",
+        position: "relative",
+        zIndex: 10, // acima da luz
       }}
     >
       <div
@@ -64,10 +68,7 @@ function Header() {
             gap: "12px",
           }}
         >
-          {/* IMPORTANTE: LanguageSelector é client */}
-          {/* A gente importa só aqui, porque aqui é client */}
-          {/* eslint-disable-next-line @next/next/no-server-import-in-page */}
-          {require("./LanguageSelector").default()}
+          <LanguageSelector />
 
           <button
             style={{
@@ -104,6 +105,8 @@ function Footer() {
         background:
           "radial-gradient(circle at 20% 20%, rgba(246,226,122,0.06) 0%, rgba(0,0,0,0) 60%), rgba(0,0,0,0.1)",
         flexShrink: 0,
+        position: "relative",
+        zIndex: 10,
       }}
     >
       <div
@@ -135,7 +138,6 @@ function Footer() {
   );
 }
 
-// Esse componente é o "bloco client" que envolve header / main / footer
 export default function ClientRoot({
   children,
 }: {
@@ -143,6 +145,7 @@ export default function ClientRoot({
 }) {
   return (
     <LanguageProvider>
+      {/* Esse wrapper é o "fundo" do site */}
       <div
         style={{
           minHeight: "100vh",
@@ -154,10 +157,16 @@ export default function ClientRoot({
             'system-ui, -apple-system, BlinkMacSystemFont, "Inter", "Roboto", "Segoe UI", sans-serif',
           display: "flex",
           flexDirection: "column",
+          position: "relative",
+          overflow: "hidden", // garante que nada estoure visual
         }}
       >
+        {/* Luz que segue o mouse */}
+        <MouseGlow />
+
         <Header />
 
+        {/* CONTEÚDO DA PÁGINA */}
         <main
           style={{
             maxWidth: "1280px",
@@ -165,6 +174,8 @@ export default function ClientRoot({
             margin: "0 auto",
             padding: "48px 24px 80px",
             flex: "1 0 auto",
+            position: "relative",
+            zIndex: 10,
           }}
         >
           {children}
