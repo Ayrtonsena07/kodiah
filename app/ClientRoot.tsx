@@ -1,14 +1,43 @@
 "use client";
 
 import Image from "next/image";
-import { LanguageProvider, useLanguage } from "./LanguageContext";
-import LanguageSelector from "./LanguageSelector";
-import MouseGlow from "./MouseGlow";
+import React, { useState, useEffect } from "react";
 
-// HEADER ===================================================
-function Header() {
-  const { t } = useLanguage();
+// ─────────────────────────────────────────
+// 1. Dicionário de idiomas (EN por enquanto)
+// Depois você pode traduzir pt/es/etc.
+// Só NÃO remova nenhuma chave.
+// ─────────────────────────────────────────
+const LANG_DICTIONARY = {
+  en: {
+    heroHeadline: "Shape your vision into reality.",
+    heroSub:
+      "Tell Kodiah what you want. We build intelligent, connected applications — fast, reliable, and beautifully designed. No code needed.",
+    promptLabel: "Tell Kodiah what to build:",
+    promptPlaceholder: "Build me an appointment app that takes payments",
+    betaNote: "Private beta — limited seats.",
+    generateBtn: "Generate",
+    card1Title: "Built with AI",
+    card1Body:
+      "You describe the product. Kodiah drafts it in minutes.",
+    card2Title: "Refined by humans",
+    card2Body:
+      "Our team polishes flows, UI and data model for real business use.",
+    card3Title: "Ready to sell",
+    card3Body:
+      "Hosting, login, dashboard, payments. You don’t just “test” — you launch.",
+    startBuilding: "Start Building", // <- adicionamos essa chave
+    languageLabel: "Language",
+  },
+} as const;
 
+type LangKey = keyof typeof LANG_DICTIONARY;
+const DEFAULT_LANG: LangKey = "en";
+
+// ─────────────────────────────────────────
+// 2. Componente Header (logo + botão)
+// ─────────────────────────────────────────
+function Header({ t }: { t: (typeof LANG_DICTIONARY)[LangKey] }) {
   return (
     <header
       style={{
@@ -17,7 +46,7 @@ function Header() {
         background: "rgba(0,0,0,0.3)",
         backdropFilter: "blur(12px)",
         position: "relative",
-        zIndex: 10, // acima do glow do mouse
+        zIndex: 10,
       }}
     >
       <div
@@ -31,7 +60,7 @@ function Header() {
           color: "white",
         }}
       >
-        {/* ESQUERDA: logo + nome */}
+        {/* BLOCO ESQUERDA: LOGO + NOME */}
         <div
           style={{
             display: "flex",
@@ -39,366 +68,361 @@ function Header() {
             gap: "12px",
           }}
         >
-          {/* sua logo oficial */}
           <Image
-            src="/kodiah-logo.png" // <-- está no /public, certo
+            src="/kodiah-logo.png"
             alt="Kodiah Logo"
-            width={40}
-            height={40}
+            width={42}
+            height={42}
             style={{
-              borderRadius: "8px",
+              borderRadius: "10px",
               filter:
                 "drop-shadow(0 0 10px rgba(246,226,122,0.45)) drop-shadow(0 0 25px rgba(199,146,47,0.25))",
             }}
           />
-
-          {/* nome "Kodiah" */}
           <span
             style={{
               fontSize: "16px",
               fontWeight: 500,
-              lineHeight: 1.2,
               color: "white",
               fontFamily:
                 '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+              lineHeight: "1.2",
             }}
           >
             Kodiah
           </span>
         </div>
 
-        {/* DIREITA: seletor de idioma  */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "16px",
-          }}
-        >
-          {/* seletor de idioma custom */}
-          <LanguageSelector />
-
-          {/*
-            IMPORTANTE:
-            removi o botão "Start Building" por enquanto pra não usar t.startBuilding,
-            que é o que estava quebrando o build.
-            Quando quisermos reativar, a gente volta com o botão e adiciona a chave no dicionário.
-          */}
+        {/* BLOCO DIREITA: BOTÃO CALL TO ACTION */}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          {/* Botão CTA */}
+          <button
+            style={{
+              background:
+                "radial-gradient(circle at 20% 20%, #f7e9a6 0%, #d4a93d 60%, #8b5e13 100%)",
+              color: "#000",
+              fontSize: "14px",
+              fontWeight: 600,
+              padding: "10px 16px",
+              borderRadius: "8px",
+              border: "1px solid rgba(255,255,255,0.2)",
+              boxShadow:
+                "0 8px 40px rgba(255,213,89,0.4), 0 2px 6px rgba(0,0,0,0.6)",
+              cursor: "pointer",
+              lineHeight: 1.1,
+              whiteSpace: "nowrap",
+              minWidth: "120px",
+              textAlign: "center",
+            }}
+          >
+            {t.startBuilding /* <- agora o TS conhece essa chave */}
+          </button>
         </div>
       </div>
     </header>
   );
 }
 
-// HERO (a seção grande inicial) ============================
-function Hero() {
-  const { t } = useLanguage();
+// ─────────────────────────────────────────
+// 3. Glow que segue o mouse (efeito luxo 😎)
+// ─────────────────────────────────────────
+function MouseGlow() {
+  const [pos, setPos] = useState({ x: -9999, y: -9999 });
 
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      setPos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("pointermove", move);
+    return () => window.removeEventListener("pointermove", move);
+  }, []);
+
+  return (
+    <div
+      style={{
+        pointerEvents: "none",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        zIndex: 0,
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          left: pos.x - 150 + "px",
+          top: pos.y - 150 + "px",
+          width: "300px",
+          height: "300px",
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(255,220,120,0.18) 0%, rgba(0,0,0,0) 70%)",
+          filter: "blur(32px)",
+          mixBlendMode: "screen",
+        }}
+      />
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────
+// 4. Cartões “Built with AI / Refined...”
+// ─────────────────────────────────────────
+function FeatureCard({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
+  return (
+    <div
+      style={{
+        flex: 1,
+        background:
+          "radial-gradient(circle at 20% 20%, rgba(40,40,40,0.6) 0%, rgba(10,10,10,0.4) 70%)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        borderRadius: "8px",
+        padding: "16px 20px",
+        minWidth: "0",
+        boxShadow:
+          "0 30px 120px rgba(0,0,0,0.9), 0 10px 30px rgba(0,0,0,0.7)",
+      }}
+    >
+      <div
+        style={{
+          fontSize: "15px",
+          lineHeight: "20px",
+          fontWeight: 600,
+          color: "white",
+          marginBottom: "8px",
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+        }}
+      >
+        {title}
+      </div>
+      <div
+        style={{
+          fontSize: "14px",
+          lineHeight: "20px",
+          color: "rgba(255,255,255,0.7)",
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+        }}
+      >
+        {body}
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────
+// 5. Hero principal (headline, input prompt etc.)
+// ─────────────────────────────────────────
+function Hero({ t }: { t: (typeof LANG_DICTIONARY)[LangKey] }) {
   return (
     <section
       style={{
+        position: "relative",
+        zIndex: 1,
         maxWidth: "1280px",
         margin: "0 auto",
-        padding: "64px 24px 120px",
+        padding: "48px 24px 80px",
         color: "white",
         fontFamily:
           '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
-        position: "relative",
-        zIndex: 1,
       }}
     >
-      {/* título */}
+      {/* Headline */}
       <h1
         style={{
-          fontSize: "clamp(2rem, 1.1rem + 2vw, 2.5rem)",
+          fontSize: "clamp(2rem, 1vw + 1.5rem, 2.4rem)",
+          lineHeight: 1.15,
           fontWeight: 600,
-          lineHeight: 1.2,
           color: "white",
           maxWidth: "720px",
-          margin: "0 0 24px 0",
+          marginBottom: "16px",
         }}
       >
-        {/* usamos <span> dourado dentro do título como antes */}
-        <span style={{ color: "white" }}>{t.heroHeadline.split("##")[0]}</span>{" "}
-        <span
-          style={{
-            background:
-              "radial-gradient(circle at 0% 0%, #f7e9a4 0%, #c0892a 60%)",
-            WebkitBackgroundClip: "text",
-            color: "transparent",
-            filter:
-              "drop-shadow(0 0 10px rgba(246,226,122,0.4)) drop-shadow(0 0 30px rgba(199,146,47,0.3))",
-          }}
-        >
-          {t.heroHeadline.split("##")[1] || ""}
-        </span>
+        {t.heroHeadline.split(" ").map((word, i) => {
+          // deixa algumas palavras douradas
+          if (
+            word.toLowerCase() === "vision" ||
+            word.toLowerCase() === "reality."
+          ) {
+            return (
+              <span
+                key={i}
+                style={{
+                  background:
+                    "linear-gradient(90deg,#f9e7a3 0%,#d8a63c 60%,#8b5e13 100%)",
+                  WebkitBackgroundClip: "text",
+                  color: "transparent",
+                  textShadow:
+                    "0 0 20px rgba(255,215,100,0.4), 0 0 60px rgba(160,100,20,0.4)",
+                }}
+              >
+                {word + " "}
+              </span>
+            );
+          }
+          return word + " ";
+        })}
       </h1>
 
-      {/* subtítulo */}
+      {/* Subtexto */}
       <p
         style={{
+          fontSize: "16px",
+          lineHeight: "24px",
           maxWidth: "720px",
-          fontSize: "1.1rem",
-          lineHeight: 1.5,
-          fontWeight: 400,
           color: "rgba(255,255,255,0.75)",
-          margin: "0 0 32px 0",
+          marginBottom: "32px",
+          fontWeight: 400,
         }}
       >
         {t.heroSub}
       </p>
 
-      {/* BLOCO DO PROMPT / INPUT */}
+      {/* Caixinha "Tell Kodiah what to build" */}
       <div
         style={{
-          background:
-            "radial-gradient(circle at 20% 20%, rgba(255,255,255,0.07) 0%, rgba(0,0,0,0) 70%)",
-          border: "1px solid rgba(255,255,255,0.1)",
-          borderRadius: "8px",
-          boxShadow:
-            "0 40px 120px rgba(199,146,47,0.25), 0 10px 30px rgba(0,0,0,0.8)",
-          padding: "24px",
-          maxWidth: "720px",
           position: "relative",
-          marginBottom: "48px",
-          backgroundColor: "rgba(0,0,0,0.4)",
+          background:
+            "radial-gradient(circle at 20% 20%, rgba(40,40,40,0.6) 0%, rgba(10,10,10,0.4) 70%)",
+          borderRadius: "8px",
+          border: "1px solid rgba(255,255,255,0.07)",
+          padding: "16px 16px 20px",
+          maxWidth: "720px",
+          boxShadow:
+            "0 60px 200px rgba(0,0,0,1), 0 30px 100px rgba(0,0,0,0.8)",
         }}
       >
-        {/* label acima do input */}
         <label
           style={{
-            display: "block",
-            fontSize: "0.9rem",
+            fontSize: "14px",
+            lineHeight: "20px",
+            color: "rgba(255,255,255,0.75)",
             fontWeight: 500,
-            color: "rgba(255,255,255,0.8)",
+            display: "block",
             marginBottom: "8px",
           }}
         >
           {t.promptLabel}
         </label>
 
-        {/* linha input + botão */}
         <div
           style={{
             display: "flex",
+            gap: "8px",
             alignItems: "stretch",
-            background: "rgba(0,0,0,0.6)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: "6px",
-            overflow: "hidden",
           }}
         >
           <input
+            defaultValue={t.promptPlaceholder}
             style={{
               flex: 1,
-              background: "transparent",
+              backgroundColor: "rgba(0,0,0,0.6)",
+              border:
+                "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "6px",
               color: "white",
-              border: "none",
-              outline: "none",
-              fontSize: "0.95rem",
-              padding: "14px 16px",
+              fontSize: "14px",
+              lineHeight: "20px",
+              padding: "12px 12px",
               fontFamily:
                 '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
-            placeholder={t.promptPlaceholder}
           />
 
           <button
             style={{
               background:
-                "radial-gradient(circle at 20% 20%, #f7e9a4 0%, #c0892a 60%)",
-              border: "none",
-              outline: "none",
+                "radial-gradient(circle at 20% 20%, #f7e9a6 0%, #d4a93d 60%, #8b5e13 100%)",
               color: "#000",
+              fontSize: "14px",
               fontWeight: 600,
-              fontSize: "0.95rem",
-              padding: "0 20px",
-              borderRadius: "0",
-              cursor: "pointer",
+              padding: "12px 16px",
+              borderRadius: "6px",
+              border: "1px solid rgba(255,255,255,0.2)",
               boxShadow:
-                "0 20px 60px rgba(199,146,47,0.4), 0 4px 12px rgba(0,0,0,0.8)",
+                "0 12px 40px rgba(255,213,89,0.4), 0 2px 6px rgba(0,0,0,0.6)",
+              lineHeight: 1.2,
               whiteSpace: "nowrap",
+              cursor: "pointer",
+              minWidth: "110px",
+              textAlign: "center",
             }}
           >
             {t.generateBtn}
           </button>
         </div>
 
-        {/* texto pequeno abaixo */}
         <div
           style={{
-            fontSize: "0.8rem",
-            color: "rgba(255,255,255,0.6)",
-            marginTop: "10px",
+            fontSize: "13px",
+            lineHeight: "18px",
+            color: "rgba(255,255,255,0.5)",
+            fontWeight: 400,
+            marginTop: "12px",
           }}
         >
-          {t.disclaimer}
+          {t.betaNote}
         </div>
       </div>
 
-      {/* CARDS DE VALOR */}
+      {/* 3 Cards */}
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "1fr",
+          display: "flex",
+          flexWrap: "wrap",
           gap: "16px",
-          maxWidth: "960px",
+          marginTop: "40px",
         }}
       >
-        {/* CARD 1 */}
-        <div
-          style={{
-            backgroundColor: "rgba(0,0,0,0.4)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "8px",
-            padding: "20px 24px",
-            boxShadow:
-              "0 30px 80px rgba(0,0,0,0.8), 0 8px 20px rgba(0,0,0,0.6)",
-          }}
-        >
-          <div
-            style={{
-              color: "white",
-              fontSize: "1rem",
-              fontWeight: 500,
-              marginBottom: "8px",
-            }}
-          >
-            {t.card1Title}
-          </div>
-          <div
-            style={{
-              fontSize: "0.9rem",
-              lineHeight: 1.5,
-              color: "rgba(255,255,255,0.7)",
-            }}
-          >
-            {t.card1Body}
-          </div>
-        </div>
-
-        {/* CARD 2 */}
-        <div
-          style={{
-            backgroundColor: "rgba(0,0,0,0.4)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "8px",
-            padding: "20px 24px",
-            boxShadow:
-              "0 30px 80px rgba(0,0,0,0.8), 0 8px 20px rgba(0,0,0,0.6)",
-          }}
-        >
-          <div
-            style={{
-              color: "white",
-              fontSize: "1rem",
-              fontWeight: 500,
-              marginBottom: "8px",
-            }}
-          >
-            {t.card2Title}
-          </div>
-          <div
-            style={{
-              fontSize: "0.9rem",
-              lineHeight: 1.5,
-              color: "rgba(255,255,255,0.7)",
-            }}
-          >
-            {t.card2Body}
-          </div>
-        </div>
-
-        {/* CARD 3 */}
-        <div
-          style={{
-            backgroundColor: "rgba(0,0,0,0.4)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "8px",
-            padding: "20px 24px",
-            boxShadow:
-              "0 30px 80px rgba(0,0,0,0.8), 0 8px 20px rgba(0,0,0,0.6)",
-          }}
-        >
-          <div
-            style={{
-              color: "white",
-              fontSize: "1rem",
-              fontWeight: 500,
-              marginBottom: "8px",
-            }}
-          >
-            {t.card3Title}
-          </div>
-          <div
-            style={{
-              fontSize: "0.9rem",
-              lineHeight: 1.5,
-              color: "rgba(255,255,255,0.7)",
-            }}
-          >
-            {t.card3Body}
-          </div>
-        </div>
+        <FeatureCard
+          title={t.card1Title}
+          body={t.card1Body}
+        />
+        <FeatureCard
+          title={t.card2Title}
+          body={t.card2Body}
+        />
+        <FeatureCard
+          title={t.card3Title}
+          body={t.card3Body}
+        />
       </div>
     </section>
   );
 }
 
-// FOOTER BEM SIMPLES (temporário) =========================
-function Footer() {
+// ─────────────────────────────────────────
+// 6. <ClientRoot/> = página toda
+// ─────────────────────────────────────────
+export default function ClientRoot() {
+  // Futuro: salvar idioma escolhido no state/localStorage/etc.
+  const [lang] = useState<LangKey>(DEFAULT_LANG);
+  const t = LANG_DICTIONARY[lang];
+
   return (
-    <footer
+    <main
       style={{
-        width: "100%",
-        borderTop: "1px solid rgba(255,255,255,0.08)",
+        position: "relative",
+        minHeight: "100vh",
         background:
-          "radial-gradient(circle at 20% 20%, rgba(199,146,47,0.25) 0%, rgba(0,0,0,0) 70%)",
-        backgroundColor: "rgba(0,0,0,0.4)",
-        backdropFilter: "blur(12px)",
-        marginTop: "80px",
-        color: "rgba(255,255,255,0.6)",
-        fontSize: "0.8rem",
-        lineHeight: 1.5,
-        fontFamily:
-          '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+          "radial-gradient(circle at 20% 20%, #1a1c22 0%, #0d0f12 60%, #07080a 100%)",
+        color: "white",
       }}
     >
-      <div
-        style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "24px",
-          textAlign: "left",
-        }}
-      >
-        <div
-          style={{
-            color: "rgba(255,255,255,0.8)",
-            fontWeight: 500,
-            marginBottom: "6px",
-          }}
-        >
-          Kodiah — Intelligence has a new signature.
-        </div>
-        <div>© {new Date().getFullYear()} Kodiah Inc. All rights reserved.</div>
-      </div>
-    </footer>
-  );
-}
-
-// ROOT WRAPPER ============================================
-export default function ClientRoot() {
-  return (
-    <LanguageProvider>
-      {/* camada que desenha o brilho que segue o mouse */}
       <MouseGlow />
-      {/* header fixo */}
-      <Header />
-      {/* hero de venda */}
-      <Hero />
-      {/* rodapé */}
-      <Footer />
-    </LanguageProvider>
+
+      <Header t={t} />
+
+      <Hero t={t} />
+    </main>
   );
 }
