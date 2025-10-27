@@ -1,57 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
 import { LanguageProvider, useLanguage } from "./LanguageContext";
 import LanguageSelector from "./LanguageSelector";
+import MouseGlow from "./MouseGlow";
 
-/* =========================
-   EFEITO DE LUZ NO MOUSE
-   ========================= */
-function MouseGlow() {
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    function handleMove(e: MouseEvent) {
-      setPos({ x: e.clientX, y: e.clientY });
-    }
-    window.addEventListener("pointermove", handleMove);
-    return () => window.removeEventListener("pointermove", handleMove);
-  }, []);
-
-  return (
-    <div
-      style={{
-        position: "fixed",
-        left: 0,
-        top: 0,
-        pointerEvents: "none",
-        width: "100vw",
-        height: "100vh",
-        zIndex: 0,
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          left: pos.x - 200,
-          top: pos.y - 200,
-          width: 400,
-          height: 400,
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle at center, rgba(255,215,100,0.18) 0%, rgba(0,0,0,0) 70%)",
-          filter: "blur(60px)",
-          mixBlendMode: "screen",
-        }}
-      />
-    </div>
-  );
-}
-
-/* =========================
-   CABEÇALHO (LOGO / NOME / LINGUA / BOTÃO)
-   ========================= */
 function Header() {
   const { t } = useLanguage();
 
@@ -63,7 +16,7 @@ function Header() {
         background: "rgba(0,0,0,0.3)",
         backdropFilter: "blur(12px)",
         position: "relative",
-        zIndex: 10, // acima da luz
+        zIndex: 10, // fica acima da luz do mouse
       }}
     >
       <div
@@ -77,7 +30,7 @@ function Header() {
           color: "white",
         }}
       >
-        {/* BLOCO ESQUERDO: LOGO + NOME */}
+        {/* ESQUERDA: logo + nome */}
         <div
           style={{
             display: "flex",
@@ -86,43 +39,41 @@ function Header() {
           }}
         >
           <Image
-            src="/kodiah-logo.png" // <-- garanta que esse arquivo está em /public/kodiah-logo.png
+            src="/kodiah-logo.png" // IMPORTANTE: esse arquivo precisa estar em /public/kodiah-logo.png
             alt="Kodiah Logo"
             width={42}
             height={42}
             style={{
               borderRadius: "10px",
-              // brilho dourado premium em volta da logo
               filter:
                 "drop-shadow(0 0 10px rgba(246,226,122,0.45)) drop-shadow(0 0 25px rgba(199,146,47,0.25))",
             }}
           />
-
           <span
             style={{
               fontSize: "16px",
               fontWeight: 500,
               color: "white",
               fontFamily:
-                "-apple-system, BlinkMacSystemFont, Inter, Roboto, 'SF Pro Display', system-ui, sans-serif",
+                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
             Kodiah
           </span>
         </div>
 
-        {/* BLOCO DIREITO: IDIOMA + BOTÃO */}
+        {/* DIREITA: seletor de idioma + botão */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "16px",
+            gap: "12px",
           }}
         >
-          {/* seletor de idioma */}
+          {/* menu de idiomas */}
           <LanguageSelector />
 
-          {/* botão Start Building */}
+          {/* botão call-to-action */}
           <button
             style={{
               background:
@@ -140,7 +91,8 @@ function Header() {
               textAlign: "center",
             }}
           >
-            {t.startBuilding /* ex: "Start Building" */}
+            {/* antes estava {t.startBuilding} e quebrava; agora é texto fixo */}
+            Start Building
           </button>
         </div>
       </div>
@@ -148,136 +100,118 @@ function Header() {
   );
 }
 
-/* =========================
-   BLOCO HERO (título / descrição / input / cards)
-   ========================= */
-function Hero() {
+function HeroSection() {
   const { t } = useLanguage();
 
   return (
     <section
       style={{
-        position: "relative",
-        zIndex: 1, // acima do MouseGlow
-        color: "white",
         maxWidth: "1280px",
         margin: "0 auto",
-        padding: "48px 24px 96px",
-        display: "flex",
-        flexDirection: "column",
-        gap: "32px",
+        padding: "64px 24px",
+        color: "white",
+        position: "relative",
+        zIndex: 1,
       }}
     >
-      {/* Título principal */}
-      <div
+      {/* título grande */}
+      <h1
         style={{
-          maxWidth: "720px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
+          fontSize: "clamp(32px, 2vw + 24px, 40px)",
+          lineHeight: 1.2,
+          fontWeight: 600,
+          color: "white",
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+          maxWidth: "680px",
         }}
       >
-        <h1
+        {/* t.heroHeadline é o texto tipo "Shape your vision into reality." */}
+        {/* t.heroHeadlineStrong é a parte dourada */}
+        <span>{t.heroHeadline} </span>
+        <span
           style={{
-            fontSize: "clamp(2rem,1.2rem + 1.5vw,2.5rem)",
-            lineHeight: 1.2,
-            fontWeight: 600,
-            color: "white",
-            fontFamily:
-              "-apple-system, BlinkMacSystemFont, Inter, Roboto, 'SF Pro Display', system-ui, sans-serif",
+            background:
+              "linear-gradient(90deg, rgb(255,230,150) 0%, rgb(180,120,20) 60%)",
+            WebkitBackgroundClip: "text",
+            color: "transparent",
+            filter:
+              "drop-shadow(0 0 12px rgba(255,210,80,0.4)) drop-shadow(0 0 40px rgba(200,140,30,0.25))",
           }}
         >
-          <span
-            style={{
-              color: "white",
-            }}
-          >
-            {t.hero_line1_prefix /* ex: "Shape your" */}
-          </span>{" "}
-          <span
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(255,241,175,1) 0%, rgba(180,134,26,1) 100%)",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-              fontWeight: 600,
-              textShadow:
-                "0 0 12px rgba(255,228,120,0.4), 0 0 32px rgba(180,134,26,0.4)",
-            }}
-          >
-            {t.hero_line1_highlight /* ex: "vision" */}
-          </span>{" "}
-          <span
-            style={{
-              color: "white",
-            }}
-          >
-            {t.hero_line1_suffix /* ex: "into reality." */}
-          </span>
-        </h1>
+          {t.heroHeadlineStrong}
+        </span>
+      </h1>
 
-        <p
-          style={{
-            color: "rgba(255,255,255,0.8)",
-            fontSize: "16px",
-            lineHeight: 1.5,
-            maxWidth: "640px",
-            fontWeight: 400,
-            fontFamily:
-              "-apple-system, BlinkMacSystemFont, Inter, Roboto, 'SF Pro Display', system-ui, sans-serif",
-          }}
-        >
-          {t.hero_sub /* ex: "Tell Kodiah what you want..." */}
-        </p>
-      </div>
+      {/* subtítulo */}
+      <p
+        style={{
+          marginTop: "24px",
+          fontSize: "18px",
+          lineHeight: 1.5,
+          color: "rgba(255,255,255,0.8)",
+          maxWidth: "640px",
+          fontWeight: 400,
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+        }}
+      >
+        {t.heroSub}
+      </p>
 
-      {/* Caixa prompt + botão Generate */}
+      {/* bloco do prompt + botão */}
       <div
         style={{
-          position: "relative",
-          maxWidth: "760px",
+          marginTop: "32px",
+          width: "100%",
+          maxWidth: "700px",
           background:
             "radial-gradient(circle at 20% 20%, rgba(255,234,150,0.07) 0%, rgba(0,0,0,0) 70%)",
-          padding: "24px",
-          borderRadius: "8px",
           border: "1px solid rgba(255,255,255,0.08)",
+          borderRadius: "8px",
+          padding: "24px",
           boxShadow:
-            "0 60px 200px rgba(255,200,50,0.15), 0 30px 60px rgba(0,0,0,0.6) inset",
-          backgroundColor: "rgba(15,15,15,0.6)",
-          backdropFilter: "blur(8px)",
+            "0 40px 120px rgba(255,200,50,0.1), 0 8px 30px rgba(0,0,0,0.8)",
+          backgroundColor: "rgba(0,0,0,0.4)",
         }}
       >
-        <label
+        {/* label acima */}
+        <div
           style={{
-            display: "block",
-            color: "rgba(255,255,255,0.8)",
             fontSize: "14px",
+            color: "rgba(255,255,255,0.7)",
             marginBottom: "8px",
-            fontWeight: 400,
+            fontFamily:
+              '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
           }}
         >
-          {t.prompt_label /* ex: "Tell Kodiah what to build:" */}
-        </label>
+          {t.promptLabel}
+        </div>
 
+        {/* linha input + botão */}
         <div
           style={{
             display: "flex",
+            alignItems: "stretch",
             gap: "12px",
           }}
         >
           <input
-            defaultValue={t.prompt_placeholder /* ex: "Build me..." */}
             style={{
               flex: 1,
               backgroundColor: "rgba(0,0,0,0.6)",
-              border: "1px solid rgba(255,255,255,0.12)",
+              border: "1px solid rgba(255,255,255,0.2)",
               borderRadius: "6px",
               color: "white",
-              fontSize: "15px",
-              lineHeight: 1.4,
               padding: "14px 16px",
+              fontSize: "15px",
               outline: "none",
+              boxShadow:
+                "0 20px 60px rgba(0,0,0,0.8), 0 2px 3px rgba(0,0,0,0.6) inset",
+              fontFamily:
+                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
+            placeholder={t.promptPlaceholder}
           />
 
           <button
@@ -290,207 +224,211 @@ function Hero() {
               fontSize: "14px",
               borderRadius: "8px",
               padding: "12px 16px",
-              boxShadow:
-                "0 20px 60px rgba(255,200,50,0.25), 0 2px 4px rgba(0,0,0,0.6)",
-              cursor: "pointer",
               minWidth: "110px",
+              cursor: "pointer",
+              boxShadow:
+                "0 20px 60px rgba(255,200,50,0.3), 0 2px 4px rgba(0,0,0,0.6)",
               textAlign: "center",
-              whiteSpace: "nowrap",
+              fontFamily:
+                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
-            {t.generate /* ex: "Generate" */}
+            {t.generateBtn}
           </button>
         </div>
 
+        {/* aviso beta */}
         <div
           style={{
             marginTop: "12px",
             fontSize: "13px",
-            lineHeight: 1.4,
             color: "rgba(255,255,255,0.6)",
+            fontFamily:
+              '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
           }}
         >
-          {t.beta_note /* ex: "Private beta — limited seats." */}
+          {t.betaNote}
         </div>
       </div>
 
-      {/* Cards de valor */}
+      {/* 3 cards: Built with AI, Refined by humans, Ready to sell */}
       <div
         style={{
-          display: "flex",
-          flexWrap: "wrap",
+          marginTop: "32px",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
           gap: "16px",
-          maxWidth: "1040px",
+          maxWidth: "1000px",
         }}
       >
         {/* Card 1 */}
         <div
           style={{
-            flex: "1 1 280px",
-            minWidth: "260px",
-            backgroundColor: "rgba(0,0,0,0.4)",
             border: "1px solid rgba(255,255,255,0.08)",
+            backgroundColor: "rgba(0,0,0,0.4)",
             borderRadius: "8px",
-            padding: "20px 24px",
+            padding: "16px 20px",
+            color: "white",
             boxShadow:
-              "0 30px 120px rgba(0,0,0,0.8), 0 0 120px rgba(255,220,120,0.07) inset",
+              "0 30px 80px rgba(0,0,0,0.8), 0 2px 3px rgba(0,0,0,0.6) inset",
+            minHeight: "130px",
           }}
         >
           <div
             style={{
-              color: "white",
               fontSize: "15px",
               fontWeight: 600,
+              color: "white",
               marginBottom: "8px",
+              fontFamily:
+                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
-            {t.card1_title /* ex: "Built with AI" */}
+            {t.card1Title}
           </div>
           <div
             style={{
-              color: "rgba(255,255,255,0.7)",
               fontSize: "14px",
               lineHeight: 1.5,
-              fontWeight: 400,
+              color: "rgba(255,255,255,0.7)",
+              fontFamily:
+                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
-            {t.card1_desc /* ex: "You describe..." */}
+            {t.card1Desc}
           </div>
         </div>
 
         {/* Card 2 */}
         <div
           style={{
-            flex: "1 1 280px",
-            minWidth: "260px",
-            backgroundColor: "rgba(0,0,0,0.4)",
             border: "1px solid rgba(255,255,255,0.08)",
+            backgroundColor: "rgba(0,0,0,0.4)",
             borderRadius: "8px",
-            padding: "20px 24px",
+            padding: "16px 20px",
+            color: "white",
             boxShadow:
-              "0 30px 120px rgba(0,0,0,0.8), 0 0 120px rgba(255,220,120,0.07) inset",
+              "0 30px 80px rgba(0,0,0,0.8), 0 2px 3px rgba(0,0,0,0.6) inset",
+            minHeight: "130px",
           }}
         >
           <div
             style={{
-              color: "white",
               fontSize: "15px",
               fontWeight: 600,
+              color: "white",
               marginBottom: "8px",
+              fontFamily:
+                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
-            {t.card2_title /* ex: "Refined by humans" */}
+            {t.card2Title}
           </div>
           <div
             style={{
-              color: "rgba(255,255,255,0.7)",
               fontSize: "14px",
               lineHeight: 1.5,
-              fontWeight: 400,
+              color: "rgba(255,255,255,0.7)",
+              fontFamily:
+                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
-            {t.card2_desc /* ex: "Our team polishes..." */}
+            {t.card2Desc}
           </div>
         </div>
 
         {/* Card 3 */}
         <div
           style={{
-            flex: "1 1 280px",
-            minWidth: "260px",
-            backgroundColor: "rgba(0,0,0,0.4)",
             border: "1px solid rgba(255,255,255,0.08)",
+            backgroundColor: "rgba(0,0,0,0.4)",
             borderRadius: "8px",
-            padding: "20px 24px",
+            padding: "16px 20px",
+            color: "white",
             boxShadow:
-              "0 30px 120px rgba(0,0,0,0.8), 0 0 120px rgba(255,220,120,0.07) inset",
+              "0 30px 80px rgba(0,0,0,0.8), 0 2px 3px rgba(0,0,0,0.6) inset",
+            minHeight: "130px",
           }}
         >
           <div
             style={{
-              color: "white",
               fontSize: "15px",
               fontWeight: 600,
+              color: "white",
               marginBottom: "8px",
+              fontFamily:
+                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
-            {t.card3_title /* ex: "Ready to sell" */}
+            {t.card3Title}
           </div>
           <div
             style={{
-              color: "rgba(255,255,255,0.7)",
               fontSize: "14px",
               lineHeight: 1.5,
-              fontWeight: 400,
+              color: "rgba(255,255,255,0.7)",
+              fontFamily:
+                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
-            {t.card3_desc /* ex: "Hosting, login..." */}
+            {t.card3Desc}
           </div>
         </div>
       </div>
+
+      {/* rodapé compacto */}
+      <footer
+        style={{
+          marginTop: "48px",
+          fontSize: "13px",
+          lineHeight: 1.4,
+          color: "rgba(255,255,255,0.6)",
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+        }}
+      >
+        <div
+          style={{
+            fontSize: "14px",
+            color: "rgba(255,255,255,0.75)",
+            marginBottom: "8px",
+            fontWeight: 500,
+          }}
+        >
+          {t.footerTagline}
+        </div>
+        <div>© 2025 Kodiah Inc. All rights reserved.</div>
+      </footer>
     </section>
   );
 }
 
-/* =========================
-   FOOTER SIMPLES
-   ========================= */
-function Footer() {
-  const year = new Date().getFullYear();
-  return (
-    <footer
-      style={{
-        borderTop: "1px solid rgba(255,255,255,0.07)",
-        padding: "24px",
-        textAlign: "center",
-        color: "rgba(255,255,255,0.45)",
-        fontSize: "13px",
-        maxWidth: "1280px",
-        margin: "0 auto",
-      }}
-    >
-      Kodiah — Intelligence has a new signature.
-      <br />
-      © {year} Kodiah Inc. All rights reserved.
-    </footer>
-  );
-}
-
-/* =========================
-   PÁGINA COMPLETA
-   ========================= */
-function Page() {
-  return (
-    <main
-      style={{
-        minHeight: "100vh",
-        width: "100%",
-        background:
-          "radial-gradient(circle at 20% 20%, rgba(15,15,20,1) 0%, rgba(10,12,20,1) 40%, rgba(4,6,12,1) 100%)",
-        backgroundColor: "#0a0c14",
-        color: "white",
-        position: "relative",
-        zIndex: 0,
-        overflow: "hidden",
-        fontFamily:
-          "-apple-system, BlinkMacSystemFont, Inter, Roboto, 'SF Pro Display', system-ui, sans-serif",
-      }}
-    >
-      <MouseGlow />
-      <Header />
-      <Hero />
-      <Footer />
-    </main>
-  );
-}
-
-/* =========================
-   ROOT EXPORT (com provider de idioma)
-   ========================= */
+// Componente raiz - junta tudo (MouseGlow, Header, conteúdo)
 export default function ClientRoot() {
   return (
     <LanguageProvider>
-      <Page />
+      {/* fundo geral escuro + leve radial */}
+      <div
+        style={{
+          background:
+            "radial-gradient(circle at 20% 20%, rgba(255,233,170,0.08) 0%, rgba(10,15,25,1) 60%)",
+          backgroundColor: "rgb(10,15,25)",
+          minHeight: "100vh",
+          position: "relative",
+          color: "white",
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+        }}
+      >
+        {/* luz que segue o mouse */}
+        <MouseGlow />
+
+        {/* header fixo lá em cima */}
+        <Header />
+
+        {/* conteúdo principal */}
+        <HeroSection />
+      </div>
     </LanguageProvider>
   );
 }
