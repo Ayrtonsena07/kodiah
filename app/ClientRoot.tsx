@@ -1,10 +1,57 @@
 "use client";
 
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { LanguageProvider, useLanguage } from "./LanguageContext";
 import LanguageSelector from "./LanguageSelector";
-import MouseGlow from "./MouseGlow";
 
+/* =========================
+   EFEITO DE LUZ NO MOUSE
+   ========================= */
+function MouseGlow() {
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    function handleMove(e: MouseEvent) {
+      setPos({ x: e.clientX, y: e.clientY });
+    }
+    window.addEventListener("pointermove", handleMove);
+    return () => window.removeEventListener("pointermove", handleMove);
+  }, []);
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        left: 0,
+        top: 0,
+        pointerEvents: "none",
+        width: "100vw",
+        height: "100vh",
+        zIndex: 0,
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          left: pos.x - 200,
+          top: pos.y - 200,
+          width: 400,
+          height: 400,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle at center, rgba(255,215,100,0.18) 0%, rgba(0,0,0,0) 70%)",
+          filter: "blur(60px)",
+          mixBlendMode: "screen",
+        }}
+      />
+    </div>
+  );
+}
+
+/* =========================
+   CABEÇALHO (LOGO / NOME / LINGUA / BOTÃO)
+   ========================= */
 function Header() {
   const { t } = useLanguage();
 
@@ -28,52 +75,9 @@ function Header() {
           alignItems: "center",
           justifyContent: "space-between",
           color: "white",
-        {/* LOGO + NOME */}
-<div
-  style={{
-    display: "flex",
-    alignItems: "center",
-    gap: "12px",
-  }}
->
-  <Image
-    src="/kodiah-logo.png" // Certifique-se de que o arquivo está em /public/kodiah-logo.png
-    alt="Kodiah Logo"
-    width={42}
-    height={42}
-    style={{
-      borderRadius: "10px",
-      filter:
-        "drop-shadow(0 0 10px rgba(246,226,122,0.45)) drop-shadow(0 0 25px rgba(199,146,47,0.25))",
-    }}
-  />
-  <span
-    style={{
-      fontSize: "16px",
-      fontWeight: 500,
-      color: "white",
-      fontFamily:
-        "-apple-system, BlinkMacSystemFont, Inter, Roboto, 'SF Pro Display', system-ui, sans-serif",
-    }}
-  >
-    Kodiah
-  </span>
-</div>
-
-            }}
-          />
-          <span
-            style={{
-              fontSize: "16px",
-              fontWeight: 600,
-              letterSpacing: "-0.03em",
-            }}
-          >
-            Kodiah
-          </span>
-        </div>
-
-        {/* LADO DIREITO */}
+        }}
+      >
+        {/* BLOCO ESQUERDO: LOGO + NOME */}
         <div
           style={{
             display: "flex",
@@ -81,25 +85,62 @@ function Header() {
             gap: "12px",
           }}
         >
-          <LanguageSelector />
-
-          <button
+          <Image
+            src="/kodiah-logo.png" // <-- garanta que esse arquivo está em /public/kodiah-logo.png
+            alt="Kodiah Logo"
+            width={42}
+            height={42}
             style={{
-              fontSize: "13px",
-              lineHeight: "16px",
+              borderRadius: "10px",
+              // brilho dourado premium em volta da logo
+              filter:
+                "drop-shadow(0 0 10px rgba(246,226,122,0.45)) drop-shadow(0 0 25px rgba(199,146,47,0.25))",
+            }}
+          />
+
+          <span
+            style={{
+              fontSize: "16px",
               fontWeight: 500,
-              background:
-                "linear-gradient(90deg,#F6E27A 0%,#C7922F 100%)",
-              color: "#000",
-              borderRadius: "999px",
-              padding: "6px 12px",
-              border: "0",
-              cursor: "pointer",
-              boxShadow:
-                "0 0 20px rgba(246,226,122,0.5),0 0 60px rgba(199,146,47,0.3)",
+              color: "white",
+              fontFamily:
+                "-apple-system, BlinkMacSystemFont, Inter, Roboto, 'SF Pro Display', system-ui, sans-serif",
             }}
           >
-            {t.startButton}
+            Kodiah
+          </span>
+        </div>
+
+        {/* BLOCO DIREITO: IDIOMA + BOTÃO */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "16px",
+          }}
+        >
+          {/* seletor de idioma */}
+          <LanguageSelector />
+
+          {/* botão Start Building */}
+          <button
+            style={{
+              background:
+                "radial-gradient(circle at 20% 20%, rgba(255,234,150,1) 0%, rgba(173,118,16,1) 60%)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "#000",
+              fontWeight: 500,
+              fontSize: "14px",
+              borderRadius: "10px",
+              padding: "10px 16px",
+              boxShadow:
+                "0 20px 60px rgba(255,200,50,0.3), 0 2px 4px rgba(0,0,0,0.6)",
+              cursor: "pointer",
+              minWidth: "140px",
+              textAlign: "center",
+            }}
+          >
+            {t.startBuilding /* ex: "Start Building" */}
           </button>
         </div>
       </div>
@@ -107,95 +148,349 @@ function Header() {
   );
 }
 
-function Footer() {
+/* =========================
+   BLOCO HERO (título / descrição / input / cards)
+   ========================= */
+function Hero() {
   const { t } = useLanguage();
+
+  return (
+    <section
+      style={{
+        position: "relative",
+        zIndex: 1, // acima do MouseGlow
+        color: "white",
+        maxWidth: "1280px",
+        margin: "0 auto",
+        padding: "48px 24px 96px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "32px",
+      }}
+    >
+      {/* Título principal */}
+      <div
+        style={{
+          maxWidth: "720px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "clamp(2rem,1.2rem + 1.5vw,2.5rem)",
+            lineHeight: 1.2,
+            fontWeight: 600,
+            color: "white",
+            fontFamily:
+              "-apple-system, BlinkMacSystemFont, Inter, Roboto, 'SF Pro Display', system-ui, sans-serif",
+          }}
+        >
+          <span
+            style={{
+              color: "white",
+            }}
+          >
+            {t.hero_line1_prefix /* ex: "Shape your" */}
+          </span>{" "}
+          <span
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(255,241,175,1) 0%, rgba(180,134,26,1) 100%)",
+              WebkitBackgroundClip: "text",
+              color: "transparent",
+              fontWeight: 600,
+              textShadow:
+                "0 0 12px rgba(255,228,120,0.4), 0 0 32px rgba(180,134,26,0.4)",
+            }}
+          >
+            {t.hero_line1_highlight /* ex: "vision" */}
+          </span>{" "}
+          <span
+            style={{
+              color: "white",
+            }}
+          >
+            {t.hero_line1_suffix /* ex: "into reality." */}
+          </span>
+        </h1>
+
+        <p
+          style={{
+            color: "rgba(255,255,255,0.8)",
+            fontSize: "16px",
+            lineHeight: 1.5,
+            maxWidth: "640px",
+            fontWeight: 400,
+            fontFamily:
+              "-apple-system, BlinkMacSystemFont, Inter, Roboto, 'SF Pro Display', system-ui, sans-serif",
+          }}
+        >
+          {t.hero_sub /* ex: "Tell Kodiah what you want..." */}
+        </p>
+      </div>
+
+      {/* Caixa prompt + botão Generate */}
+      <div
+        style={{
+          position: "relative",
+          maxWidth: "760px",
+          background:
+            "radial-gradient(circle at 20% 20%, rgba(255,234,150,0.07) 0%, rgba(0,0,0,0) 70%)",
+          padding: "24px",
+          borderRadius: "8px",
+          border: "1px solid rgba(255,255,255,0.08)",
+          boxShadow:
+            "0 60px 200px rgba(255,200,50,0.15), 0 30px 60px rgba(0,0,0,0.6) inset",
+          backgroundColor: "rgba(15,15,15,0.6)",
+          backdropFilter: "blur(8px)",
+        }}
+      >
+        <label
+          style={{
+            display: "block",
+            color: "rgba(255,255,255,0.8)",
+            fontSize: "14px",
+            marginBottom: "8px",
+            fontWeight: 400,
+          }}
+        >
+          {t.prompt_label /* ex: "Tell Kodiah what to build:" */}
+        </label>
+
+        <div
+          style={{
+            display: "flex",
+            gap: "12px",
+          }}
+        >
+          <input
+            defaultValue={t.prompt_placeholder /* ex: "Build me..." */}
+            style={{
+              flex: 1,
+              backgroundColor: "rgba(0,0,0,0.6)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              borderRadius: "6px",
+              color: "white",
+              fontSize: "15px",
+              lineHeight: 1.4,
+              padding: "14px 16px",
+              outline: "none",
+            }}
+          />
+
+          <button
+            style={{
+              background:
+                "radial-gradient(circle at 20% 20%, rgba(255,234,150,1) 0%, rgba(173,118,16,1) 60%)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "#000",
+              fontWeight: 500,
+              fontSize: "14px",
+              borderRadius: "8px",
+              padding: "12px 16px",
+              boxShadow:
+                "0 20px 60px rgba(255,200,50,0.25), 0 2px 4px rgba(0,0,0,0.6)",
+              cursor: "pointer",
+              minWidth: "110px",
+              textAlign: "center",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {t.generate /* ex: "Generate" */}
+          </button>
+        </div>
+
+        <div
+          style={{
+            marginTop: "12px",
+            fontSize: "13px",
+            lineHeight: 1.4,
+            color: "rgba(255,255,255,0.6)",
+          }}
+        >
+          {t.beta_note /* ex: "Private beta — limited seats." */}
+        </div>
+      </div>
+
+      {/* Cards de valor */}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "16px",
+          maxWidth: "1040px",
+        }}
+      >
+        {/* Card 1 */}
+        <div
+          style={{
+            flex: "1 1 280px",
+            minWidth: "260px",
+            backgroundColor: "rgba(0,0,0,0.4)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: "8px",
+            padding: "20px 24px",
+            boxShadow:
+              "0 30px 120px rgba(0,0,0,0.8), 0 0 120px rgba(255,220,120,0.07) inset",
+          }}
+        >
+          <div
+            style={{
+              color: "white",
+              fontSize: "15px",
+              fontWeight: 600,
+              marginBottom: "8px",
+            }}
+          >
+            {t.card1_title /* ex: "Built with AI" */}
+          </div>
+          <div
+            style={{
+              color: "rgba(255,255,255,0.7)",
+              fontSize: "14px",
+              lineHeight: 1.5,
+              fontWeight: 400,
+            }}
+          >
+            {t.card1_desc /* ex: "You describe..." */}
+          </div>
+        </div>
+
+        {/* Card 2 */}
+        <div
+          style={{
+            flex: "1 1 280px",
+            minWidth: "260px",
+            backgroundColor: "rgba(0,0,0,0.4)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: "8px",
+            padding: "20px 24px",
+            boxShadow:
+              "0 30px 120px rgba(0,0,0,0.8), 0 0 120px rgba(255,220,120,0.07) inset",
+          }}
+        >
+          <div
+            style={{
+              color: "white",
+              fontSize: "15px",
+              fontWeight: 600,
+              marginBottom: "8px",
+            }}
+          >
+            {t.card2_title /* ex: "Refined by humans" */}
+          </div>
+          <div
+            style={{
+              color: "rgba(255,255,255,0.7)",
+              fontSize: "14px",
+              lineHeight: 1.5,
+              fontWeight: 400,
+            }}
+          >
+            {t.card2_desc /* ex: "Our team polishes..." */}
+          </div>
+        </div>
+
+        {/* Card 3 */}
+        <div
+          style={{
+            flex: "1 1 280px",
+            minWidth: "260px",
+            backgroundColor: "rgba(0,0,0,0.4)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: "8px",
+            padding: "20px 24px",
+            boxShadow:
+              "0 30px 120px rgba(0,0,0,0.8), 0 0 120px rgba(255,220,120,0.07) inset",
+          }}
+        >
+          <div
+            style={{
+              color: "white",
+              fontSize: "15px",
+              fontWeight: 600,
+              marginBottom: "8px",
+            }}
+          >
+            {t.card3_title /* ex: "Ready to sell" */}
+          </div>
+          <div
+            style={{
+              color: "rgba(255,255,255,0.7)",
+              fontSize: "14px",
+              lineHeight: 1.5,
+              fontWeight: 400,
+            }}
+          >
+            {t.card3_desc /* ex: "Hosting, login..." */}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================
+   FOOTER SIMPLES
+   ========================= */
+function Footer() {
+  const year = new Date().getFullYear();
   return (
     <footer
       style={{
-        width: "100%",
-        borderTop: "1px solid rgba(255,255,255,0.08)",
-        padding: "32px 24px 64px",
-        background:
-          "radial-gradient(circle at 20% 20%, rgba(246,226,122,0.06) 0%, rgba(0,0,0,0) 60%), rgba(0,0,0,0.1)",
-        flexShrink: 0,
-        position: "relative",
-        zIndex: 10,
+        borderTop: "1px solid rgba(255,255,255,0.07)",
+        padding: "24px",
+        textAlign: "center",
+        color: "rgba(255,255,255,0.45)",
+        fontSize: "13px",
+        maxWidth: "1280px",
+        margin: "0 auto",
       }}
     >
-      <div
-        style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          fontSize: "13px",
-          lineHeight: "20px",
-          color: "rgba(255,255,255,0.6)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "6px",
-        }}
-      >
-        <div
-          style={{
-            fontWeight: 500,
-            color: "rgba(255,255,255,0.8)",
-          }}
-        >
-          {t.footerTagline}
-        </div>
-
-        <div style={{ color: "rgba(255,255,255,0.5)" }}>
-          © {new Date().getFullYear()} Kodiah Inc. All rights reserved.
-        </div>
-      </div>
+      Kodiah — Intelligence has a new signature.
+      <br />
+      © {year} Kodiah Inc. All rights reserved.
     </footer>
   );
 }
 
-export default function ClientRoot({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+/* =========================
+   PÁGINA COMPLETA
+   ========================= */
+function Page() {
+  return (
+    <main
+      style={{
+        minHeight: "100vh",
+        width: "100%",
+        background:
+          "radial-gradient(circle at 20% 20%, rgba(15,15,20,1) 0%, rgba(10,12,20,1) 40%, rgba(4,6,12,1) 100%)",
+        backgroundColor: "#0a0c14",
+        color: "white",
+        position: "relative",
+        zIndex: 0,
+        overflow: "hidden",
+        fontFamily:
+          "-apple-system, BlinkMacSystemFont, Inter, Roboto, 'SF Pro Display', system-ui, sans-serif",
+      }}
+    >
+      <MouseGlow />
+      <Header />
+      <Hero />
+      <Footer />
+    </main>
+  );
+}
+
+/* =========================
+   ROOT EXPORT (com provider de idioma)
+   ========================= */
+export default function ClientRoot() {
   return (
     <LanguageProvider>
-      {/* Esse wrapper é o "fundo" do site */}
-      <div
-        style={{
-          minHeight: "100vh",
-          background:
-            "radial-gradient(circle at 20% 20%, rgba(246,226,122,0.07) 0%, rgba(0,0,0,0) 60%), radial-gradient(circle at 80% 20%, rgba(199,146,47,0.07) 0%, rgba(0,0,0,0) 60%), linear-gradient(#0a0f1c 0%, #1a2235 100%)",
-          color: "white",
-          WebkitFontSmoothing: "antialiased",
-          fontFamily:
-            'system-ui, -apple-system, BlinkMacSystemFont, "Inter", "Roboto", "Segoe UI", sans-serif',
-          display: "flex",
-          flexDirection: "column",
-          position: "relative",
-          overflow: "hidden", // garante que nada estoure visual
-        }}
-      >
-        {/* Luz que segue o mouse */}
-        <MouseGlow />
-
-        <Header />
-
-        {/* CONTEÚDO DA PÁGINA */}
-        <main
-          style={{
-            maxWidth: "1280px",
-            width: "100%",
-            margin: "0 auto",
-            padding: "48px 24px 80px",
-            flex: "1 0 auto",
-            position: "relative",
-            zIndex: 10,
-          }}
-        >
-          {children}
-        </main>
-
-        <Footer />
-      </div>
+      <Page />
     </LanguageProvider>
   );
 }
