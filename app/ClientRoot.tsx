@@ -16,7 +16,7 @@ function Header() {
         background: "rgba(0,0,0,0.3)",
         backdropFilter: "blur(12px)",
         position: "relative",
-        zIndex: 10, // fica acima da luz do mouse
+        zIndex: 10,
       }}
     >
       <div
@@ -28,9 +28,11 @@ function Header() {
           alignItems: "center",
           justifyContent: "space-between",
           color: "white",
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
         }}
       >
-        {/* ESQUERDA: logo + nome */}
+        {/* LOGO + NOME */}
         <div
           style={{
             display: "flex",
@@ -39,7 +41,7 @@ function Header() {
           }}
         >
           <Image
-            src="/kodiah-logo.png" // IMPORTANTE: esse arquivo precisa estar em /public/kodiah-logo.png
+            src="/kodiah-logo.png" // precisa existir em /public/kodiah-logo.png
             alt="Kodiah Logo"
             width={42}
             height={42}
@@ -49,20 +51,19 @@ function Header() {
                 "drop-shadow(0 0 10px rgba(246,226,122,0.45)) drop-shadow(0 0 25px rgba(199,146,47,0.25))",
             }}
           />
+
           <span
             style={{
               fontSize: "16px",
               fontWeight: 500,
               color: "white",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
             Kodiah
           </span>
         </div>
 
-        {/* DIREITA: seletor de idioma + botão */}
+        {/* IDIOMA + CTA */}
         <div
           style={{
             display: "flex",
@@ -70,10 +71,10 @@ function Header() {
             gap: "12px",
           }}
         >
-          {/* menu de idiomas */}
+          {/* seletor de idioma */}
           <LanguageSelector />
 
-          {/* botão call-to-action */}
+          {/* botão fixo */}
           <button
             style={{
               background:
@@ -89,9 +90,10 @@ function Header() {
               cursor: "pointer",
               minWidth: "140px",
               textAlign: "center",
+              fontFamily:
+                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
-            {/* antes estava {t.startBuilding} e quebrava; agora é texto fixo */}
             Start Building
           </button>
         </div>
@@ -112,22 +114,20 @@ function HeroSection() {
         color: "white",
         position: "relative",
         zIndex: 1,
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
       }}
     >
-      {/* título grande */}
+      {/* TÍTULO PRINCIPAL */}
       <h1
         style={{
           fontSize: "clamp(32px, 2vw + 24px, 40px)",
           lineHeight: 1.2,
           fontWeight: 600,
           color: "white",
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
           maxWidth: "680px",
         }}
       >
-        {/* t.heroHeadline é o texto tipo "Shape your vision into reality." */}
-        {/* t.heroHeadlineStrong é a parte dourada */}
         <span>{t.heroHeadline} </span>
         <span
           style={{
@@ -143,7 +143,7 @@ function HeroSection() {
         </span>
       </h1>
 
-      {/* subtítulo */}
+      {/* SUBTÍTULO */}
       <p
         style={{
           marginTop: "24px",
@@ -152,14 +152,12 @@ function HeroSection() {
           color: "rgba(255,255,255,0.8)",
           maxWidth: "640px",
           fontWeight: 400,
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
         }}
       >
         {t.heroSub}
       </p>
 
-      {/* bloco do prompt + botão */}
+      {/* BLOCO DO PROMPT */}
       <div
         style={{
           marginTop: "32px",
@@ -175,20 +173,19 @@ function HeroSection() {
           backgroundColor: "rgba(0,0,0,0.4)",
         }}
       >
-        {/* label acima */}
+        {/* LABEL */}
         <div
           style={{
             fontSize: "14px",
             color: "rgba(255,255,255,0.7)",
             marginBottom: "8px",
-            fontFamily:
-              '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+            fontWeight: 400,
           }}
         >
           {t.promptLabel}
         </div>
 
-        {/* linha input + botão */}
+        {/* INPUT + BOTÃO */}
         <div
           style={{
             display: "flex",
@@ -208,8 +205,6 @@ function HeroSection() {
               outline: "none",
               boxShadow:
                 "0 20px 60px rgba(0,0,0,0.8), 0 2px 3px rgba(0,0,0,0.6) inset",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
             placeholder={t.promptPlaceholder}
           />
@@ -229,29 +224,25 @@ function HeroSection() {
               boxShadow:
                 "0 20px 60px rgba(255,200,50,0.3), 0 2px 4px rgba(0,0,0,0.6)",
               textAlign: "center",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
             {t.generateBtn}
           </button>
         </div>
 
-        {/* aviso beta */}
+        {/* NOTA BETA */}
         <div
           style={{
             marginTop: "12px",
             fontSize: "13px",
             color: "rgba(255,255,255,0.6)",
-            fontFamily:
-              '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
           }}
         >
           {t.betaNote}
         </div>
       </div>
 
-      {/* 3 cards: Built with AI, Refined by humans, Ready to sell */}
+      {/* CARDS */}
       <div
         style={{
           marginTop: "32px",
@@ -261,7 +252,6 @@ function HeroSection() {
           maxWidth: "1000px",
         }}
       >
-        {/* Card 1 */}
         <div
           style={{
             border: "1px solid rgba(255,255,255,0.08)",
@@ -278,10 +268,8 @@ function HeroSection() {
             style={{
               fontSize: "15px",
               fontWeight: 600,
-              color: "white",
               marginBottom: "8px",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+              color: "white",
             }}
           >
             {t.card1Title}
@@ -291,15 +279,12 @@ function HeroSection() {
               fontSize: "14px",
               lineHeight: 1.5,
               color: "rgba(255,255,255,0.7)",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
             {t.card1Desc}
           </div>
         </div>
 
-        {/* Card 2 */}
         <div
           style={{
             border: "1px solid rgba(255,255,255,0.08)",
@@ -316,10 +301,8 @@ function HeroSection() {
             style={{
               fontSize: "15px",
               fontWeight: 600,
-              color: "white",
               marginBottom: "8px",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+              color: "white",
             }}
           >
             {t.card2Title}
@@ -329,15 +312,12 @@ function HeroSection() {
               fontSize: "14px",
               lineHeight: 1.5,
               color: "rgba(255,255,255,0.7)",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
             {t.card2Desc}
           </div>
         </div>
 
-        {/* Card 3 */}
         <div
           style={{
             border: "1px solid rgba(255,255,255,0.08)",
@@ -354,10 +334,8 @@ function HeroSection() {
             style={{
               fontSize: "15px",
               fontWeight: 600,
-              color: "white",
               marginBottom: "8px",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+              color: "white",
             }}
           >
             {t.card3Title}
@@ -367,8 +345,6 @@ function HeroSection() {
               fontSize: "14px",
               lineHeight: 1.5,
               color: "rgba(255,255,255,0.7)",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
             {t.card3Desc}
@@ -376,15 +352,13 @@ function HeroSection() {
         </div>
       </div>
 
-      {/* rodapé compacto */}
+      {/* RODAPÉ */}
       <footer
         style={{
           marginTop: "48px",
           fontSize: "13px",
           lineHeight: 1.4,
           color: "rgba(255,255,255,0.6)",
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
         }}
       >
         <div
@@ -403,11 +377,9 @@ function HeroSection() {
   );
 }
 
-// Componente raiz - junta tudo (MouseGlow, Header, conteúdo)
 export default function ClientRoot() {
   return (
     <LanguageProvider>
-      {/* fundo geral escuro + leve radial */}
       <div
         style={{
           background:
@@ -423,10 +395,10 @@ export default function ClientRoot() {
         {/* luz que segue o mouse */}
         <MouseGlow />
 
-        {/* header fixo lá em cima */}
+        {/* topo */}
         <Header />
 
-        {/* conteúdo principal */}
+        {/* herói */}
         <HeroSection />
       </div>
     </LanguageProvider>
