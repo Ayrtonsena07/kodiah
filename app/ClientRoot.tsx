@@ -5,6 +5,7 @@ import { LanguageProvider, useLanguage } from "./LanguageContext";
 import LanguageSelector from "./LanguageSelector";
 import MouseGlow from "./MouseGlow";
 
+// HEADER ===================================================
 function Header() {
   const { t } = useLanguage();
 
@@ -16,7 +17,7 @@ function Header() {
         background: "rgba(0,0,0,0.3)",
         backdropFilter: "blur(12px)",
         position: "relative",
-        zIndex: 10,
+        zIndex: 10, // acima do glow do mouse
       }}
     >
       <div
@@ -28,11 +29,9 @@ function Header() {
           alignItems: "center",
           justifyContent: "space-between",
           color: "white",
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
         }}
       >
-        {/* LOGO + NOME */}
+        {/* ESQUERDA: logo + nome */}
         <div
           style={{
             display: "flex",
@@ -40,69 +39,59 @@ function Header() {
             gap: "12px",
           }}
         >
+          {/* sua logo oficial */}
           <Image
-            src="/kodiah-logo.png" // precisa existir em /public/kodiah-logo.png
+            src="/kodiah-logo.png" // <-- está no /public, certo
             alt="Kodiah Logo"
-            width={42}
-            height={42}
+            width={40}
+            height={40}
             style={{
-              borderRadius: "10px",
+              borderRadius: "8px",
               filter:
                 "drop-shadow(0 0 10px rgba(246,226,122,0.45)) drop-shadow(0 0 25px rgba(199,146,47,0.25))",
             }}
           />
 
+          {/* nome "Kodiah" */}
           <span
             style={{
               fontSize: "16px",
               fontWeight: 500,
+              lineHeight: 1.2,
               color: "white",
+              fontFamily:
+                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
           >
             Kodiah
           </span>
         </div>
 
-        {/* IDIOMA + CTA */}
+        {/* DIREITA: seletor de idioma  */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "12px",
+            gap: "16px",
           }}
         >
-          {/* seletor de idioma */}
+          {/* seletor de idioma custom */}
           <LanguageSelector />
 
-          {/* botão fixo */}
-          <button
-            style={{
-              background:
-                "radial-gradient(circle at 20% 20%, rgba(255,234,150,1) 0%, rgba(173,118,16,1) 60%)",
-              border: "1px solid rgba(255,255,255,0.2)",
-              color: "#000",
-              fontWeight: 500,
-              fontSize: "14px",
-              borderRadius: "10px",
-              padding: "10px 16px",
-              boxShadow:
-                "0 20px 60px rgba(255,200,50,0.3), 0 2px 4px rgba(0,0,0,0.6)",
-              cursor: "pointer",
-              minWidth: "140px",
-              textAlign: "center",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
-            }}
-          >
-            Start Building
-          </button>
+          {/*
+            IMPORTANTE:
+            removi o botão "Start Building" por enquanto pra não usar t.startBuilding,
+            que é o que estava quebrando o build.
+            Quando quisermos reativar, a gente volta com o botão e adiciona a chave no dicionário.
+          */}
         </div>
       </div>
     </header>
   );
 }
 
-function HeroSection() {
+// HERO (a seção grande inicial) ============================
+function Hero() {
   const { t } = useLanguage();
 
   return (
@@ -110,101 +99,106 @@ function HeroSection() {
       style={{
         maxWidth: "1280px",
         margin: "0 auto",
-        padding: "64px 24px",
+        padding: "64px 24px 120px",
         color: "white",
-        position: "relative",
-        zIndex: 1,
         fontFamily:
           '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+        position: "relative",
+        zIndex: 1,
       }}
     >
-      {/* TÍTULO PRINCIPAL */}
+      {/* título */}
       <h1
         style={{
-          fontSize: "clamp(32px, 2vw + 24px, 40px)",
-          lineHeight: 1.2,
+          fontSize: "clamp(2rem, 1.1rem + 2vw, 2.5rem)",
           fontWeight: 600,
+          lineHeight: 1.2,
           color: "white",
-          maxWidth: "680px",
+          maxWidth: "720px",
+          margin: "0 0 24px 0",
         }}
       >
-        <span>{t.heroHeadline} </span>
+        {/* usamos <span> dourado dentro do título como antes */}
+        <span style={{ color: "white" }}>{t.heroHeadline.split("##")[0]}</span>{" "}
         <span
           style={{
             background:
-              "linear-gradient(90deg, rgb(255,230,150) 0%, rgb(180,120,20) 60%)",
+              "radial-gradient(circle at 0% 0%, #f7e9a4 0%, #c0892a 60%)",
             WebkitBackgroundClip: "text",
             color: "transparent",
             filter:
-              "drop-shadow(0 0 12px rgba(255,210,80,0.4)) drop-shadow(0 0 40px rgba(200,140,30,0.25))",
+              "drop-shadow(0 0 10px rgba(246,226,122,0.4)) drop-shadow(0 0 30px rgba(199,146,47,0.3))",
           }}
         >
-          {t.heroHeadlineStrong}
+          {t.heroHeadline.split("##")[1] || ""}
         </span>
       </h1>
 
-      {/* SUBTÍTULO */}
+      {/* subtítulo */}
       <p
         style={{
-          marginTop: "24px",
-          fontSize: "18px",
+          maxWidth: "720px",
+          fontSize: "1.1rem",
           lineHeight: 1.5,
-          color: "rgba(255,255,255,0.8)",
-          maxWidth: "640px",
           fontWeight: 400,
+          color: "rgba(255,255,255,0.75)",
+          margin: "0 0 32px 0",
         }}
       >
         {t.heroSub}
       </p>
 
-      {/* BLOCO DO PROMPT */}
+      {/* BLOCO DO PROMPT / INPUT */}
       <div
         style={{
-          marginTop: "32px",
-          width: "100%",
-          maxWidth: "700px",
           background:
-            "radial-gradient(circle at 20% 20%, rgba(255,234,150,0.07) 0%, rgba(0,0,0,0) 70%)",
-          border: "1px solid rgba(255,255,255,0.08)",
+            "radial-gradient(circle at 20% 20%, rgba(255,255,255,0.07) 0%, rgba(0,0,0,0) 70%)",
+          border: "1px solid rgba(255,255,255,0.1)",
           borderRadius: "8px",
-          padding: "24px",
           boxShadow:
-            "0 40px 120px rgba(255,200,50,0.1), 0 8px 30px rgba(0,0,0,0.8)",
+            "0 40px 120px rgba(199,146,47,0.25), 0 10px 30px rgba(0,0,0,0.8)",
+          padding: "24px",
+          maxWidth: "720px",
+          position: "relative",
+          marginBottom: "48px",
           backgroundColor: "rgba(0,0,0,0.4)",
         }}
       >
-        {/* LABEL */}
-        <div
+        {/* label acima do input */}
+        <label
           style={{
-            fontSize: "14px",
-            color: "rgba(255,255,255,0.7)",
+            display: "block",
+            fontSize: "0.9rem",
+            fontWeight: 500,
+            color: "rgba(255,255,255,0.8)",
             marginBottom: "8px",
-            fontWeight: 400,
           }}
         >
           {t.promptLabel}
-        </div>
+        </label>
 
-        {/* INPUT + BOTÃO */}
+        {/* linha input + botão */}
         <div
           style={{
             display: "flex",
             alignItems: "stretch",
-            gap: "12px",
+            background: "rgba(0,0,0,0.6)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "6px",
+            overflow: "hidden",
           }}
         >
           <input
             style={{
               flex: 1,
-              backgroundColor: "rgba(0,0,0,0.6)",
-              border: "1px solid rgba(255,255,255,0.2)",
-              borderRadius: "6px",
+              background: "transparent",
               color: "white",
-              padding: "14px 16px",
-              fontSize: "15px",
+              border: "none",
               outline: "none",
-              boxShadow:
-                "0 20px 60px rgba(0,0,0,0.8), 0 2px 3px rgba(0,0,0,0.6) inset",
+              fontSize: "0.95rem",
+              padding: "14px 16px",
+              fontFamily:
+                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
             }}
             placeholder={t.promptPlaceholder}
           />
@@ -212,195 +206,199 @@ function HeroSection() {
           <button
             style={{
               background:
-                "radial-gradient(circle at 20% 20%, rgba(255,234,150,1) 0%, rgba(173,118,16,1) 60%)",
-              border: "1px solid rgba(255,255,255,0.2)",
+                "radial-gradient(circle at 20% 20%, #f7e9a4 0%, #c0892a 60%)",
+              border: "none",
+              outline: "none",
               color: "#000",
-              fontWeight: 500,
-              fontSize: "14px",
-              borderRadius: "8px",
-              padding: "12px 16px",
-              minWidth: "110px",
+              fontWeight: 600,
+              fontSize: "0.95rem",
+              padding: "0 20px",
+              borderRadius: "0",
               cursor: "pointer",
               boxShadow:
-                "0 20px 60px rgba(255,200,50,0.3), 0 2px 4px rgba(0,0,0,0.6)",
-              textAlign: "center",
+                "0 20px 60px rgba(199,146,47,0.4), 0 4px 12px rgba(0,0,0,0.8)",
+              whiteSpace: "nowrap",
             }}
           >
             {t.generateBtn}
           </button>
         </div>
 
-        {/* NOTA BETA */}
+        {/* texto pequeno abaixo */}
         <div
           style={{
-            marginTop: "12px",
-            fontSize: "13px",
+            fontSize: "0.8rem",
             color: "rgba(255,255,255,0.6)",
+            marginTop: "10px",
           }}
         >
-          {t.betaNote}
+          {t.disclaimer}
         </div>
       </div>
 
-      {/* CARDS */}
+      {/* CARDS DE VALOR */}
       <div
         style={{
-          marginTop: "32px",
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
+          gridTemplateColumns: "1fr",
           gap: "16px",
-          maxWidth: "1000px",
+          maxWidth: "960px",
         }}
       >
+        {/* CARD 1 */}
         <div
           style={{
-            border: "1px solid rgba(255,255,255,0.08)",
             backgroundColor: "rgba(0,0,0,0.4)",
+            border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "8px",
-            padding: "16px 20px",
-            color: "white",
+            padding: "20px 24px",
             boxShadow:
-              "0 30px 80px rgba(0,0,0,0.8), 0 2px 3px rgba(0,0,0,0.6) inset",
-            minHeight: "130px",
+              "0 30px 80px rgba(0,0,0,0.8), 0 8px 20px rgba(0,0,0,0.6)",
           }}
         >
           <div
             style={{
-              fontSize: "15px",
-              fontWeight: 600,
-              marginBottom: "8px",
               color: "white",
+              fontSize: "1rem",
+              fontWeight: 500,
+              marginBottom: "8px",
             }}
           >
             {t.card1Title}
           </div>
           <div
             style={{
-              fontSize: "14px",
+              fontSize: "0.9rem",
               lineHeight: 1.5,
               color: "rgba(255,255,255,0.7)",
             }}
           >
-            {t.card1Desc}
+            {t.card1Body}
           </div>
         </div>
 
+        {/* CARD 2 */}
         <div
           style={{
-            border: "1px solid rgba(255,255,255,0.08)",
             backgroundColor: "rgba(0,0,0,0.4)",
+            border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "8px",
-            padding: "16px 20px",
-            color: "white",
+            padding: "20px 24px",
             boxShadow:
-              "0 30px 80px rgba(0,0,0,0.8), 0 2px 3px rgba(0,0,0,0.6) inset",
-            minHeight: "130px",
+              "0 30px 80px rgba(0,0,0,0.8), 0 8px 20px rgba(0,0,0,0.6)",
           }}
         >
           <div
             style={{
-              fontSize: "15px",
-              fontWeight: 600,
-              marginBottom: "8px",
               color: "white",
+              fontSize: "1rem",
+              fontWeight: 500,
+              marginBottom: "8px",
             }}
           >
             {t.card2Title}
           </div>
           <div
             style={{
-              fontSize: "14px",
+              fontSize: "0.9rem",
               lineHeight: 1.5,
               color: "rgba(255,255,255,0.7)",
             }}
           >
-            {t.card2Desc}
+            {t.card2Body}
           </div>
         </div>
 
+        {/* CARD 3 */}
         <div
           style={{
-            border: "1px solid rgba(255,255,255,0.08)",
             backgroundColor: "rgba(0,0,0,0.4)",
+            border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "8px",
-            padding: "16px 20px",
-            color: "white",
+            padding: "20px 24px",
             boxShadow:
-              "0 30px 80px rgba(0,0,0,0.8), 0 2px 3px rgba(0,0,0,0.6) inset",
-            minHeight: "130px",
+              "0 30px 80px rgba(0,0,0,0.8), 0 8px 20px rgba(0,0,0,0.6)",
           }}
         >
           <div
             style={{
-              fontSize: "15px",
-              fontWeight: 600,
-              marginBottom: "8px",
               color: "white",
+              fontSize: "1rem",
+              fontWeight: 500,
+              marginBottom: "8px",
             }}
           >
             {t.card3Title}
           </div>
           <div
             style={{
-              fontSize: "14px",
+              fontSize: "0.9rem",
               lineHeight: 1.5,
               color: "rgba(255,255,255,0.7)",
             }}
           >
-            {t.card3Desc}
+            {t.card3Body}
           </div>
         </div>
       </div>
-
-      {/* RODAPÉ */}
-      <footer
-        style={{
-          marginTop: "48px",
-          fontSize: "13px",
-          lineHeight: 1.4,
-          color: "rgba(255,255,255,0.6)",
-        }}
-      >
-        <div
-          style={{
-            fontSize: "14px",
-            color: "rgba(255,255,255,0.75)",
-            marginBottom: "8px",
-            fontWeight: 500,
-          }}
-        >
-          {t.footerTagline}
-        </div>
-        <div>© 2025 Kodiah Inc. All rights reserved.</div>
-      </footer>
     </section>
   );
 }
 
+// FOOTER BEM SIMPLES (temporário) =========================
+function Footer() {
+  return (
+    <footer
+      style={{
+        width: "100%",
+        borderTop: "1px solid rgba(255,255,255,0.08)",
+        background:
+          "radial-gradient(circle at 20% 20%, rgba(199,146,47,0.25) 0%, rgba(0,0,0,0) 70%)",
+        backgroundColor: "rgba(0,0,0,0.4)",
+        backdropFilter: "blur(12px)",
+        marginTop: "80px",
+        color: "rgba(255,255,255,0.6)",
+        fontSize: "0.8rem",
+        lineHeight: 1.5,
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1280px",
+          margin: "0 auto",
+          padding: "24px",
+          textAlign: "left",
+        }}
+      >
+        <div
+          style={{
+            color: "rgba(255,255,255,0.8)",
+            fontWeight: 500,
+            marginBottom: "6px",
+          }}
+        >
+          Kodiah — Intelligence has a new signature.
+        </div>
+        <div>© {new Date().getFullYear()} Kodiah Inc. All rights reserved.</div>
+      </div>
+    </footer>
+  );
+}
+
+// ROOT WRAPPER ============================================
 export default function ClientRoot() {
   return (
     <LanguageProvider>
-      <div
-        style={{
-          background:
-            "radial-gradient(circle at 20% 20%, rgba(255,233,170,0.08) 0%, rgba(10,15,25,1) 60%)",
-          backgroundColor: "rgb(10,15,25)",
-          minHeight: "100vh",
-          position: "relative",
-          color: "white",
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
-        }}
-      >
-        {/* luz que segue o mouse */}
-        <MouseGlow />
-
-        {/* topo */}
-        <Header />
-
-        {/* herói */}
-        <HeroSection />
-      </div>
+      {/* camada que desenha o brilho que segue o mouse */}
+      <MouseGlow />
+      {/* header fixo */}
+      <Header />
+      {/* hero de venda */}
+      <Hero />
+      {/* rodapé */}
+      <Footer />
     </LanguageProvider>
   );
 }
