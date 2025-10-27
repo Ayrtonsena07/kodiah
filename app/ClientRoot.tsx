@@ -28,25 +28,38 @@ function Header() {
           alignItems: "center",
           justifyContent: "space-between",
           color: "white",
-        }}
-      >
         {/* LOGO + NOME */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-          }}
-        >
-          <Image
-            src="/logo.png"
-            alt="Kodiah Logo"
-            width={42}
-            height={42}
-            style={{
-              borderRadius: "10px",
-              boxShadow:
-                "0 0 16px rgba(246,226,122,0.4), 0 0 60px rgba(199,146,47,0.25)",
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+  }}
+>
+  <Image
+    src="/kodiah-logo.png" // Certifique-se de que o arquivo está em /public/kodiah-logo.png
+    alt="Kodiah Logo"
+    width={42}
+    height={42}
+    style={{
+      borderRadius: "10px",
+      filter:
+        "drop-shadow(0 0 10px rgba(246,226,122,0.45)) drop-shadow(0 0 25px rgba(199,146,47,0.25))",
+    }}
+  />
+  <span
+    style={{
+      fontSize: "16px",
+      fontWeight: 500,
+      color: "white",
+      fontFamily:
+        "-apple-system, BlinkMacSystemFont, Inter, Roboto, 'SF Pro Display', system-ui, sans-serif",
+    }}
+  >
+    Kodiah
+  </span>
+</div>
+
             }}
           />
           <span
