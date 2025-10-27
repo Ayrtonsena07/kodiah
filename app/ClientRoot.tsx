@@ -67,7 +67,7 @@ function Header() {
               cursor: "pointer",
             }}
           >
-            {t.startButton /* ex: "Start Building" */}
+            {t.startButton}
           </button>
         </div>
       </div>
