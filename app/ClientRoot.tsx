@@ -159,15 +159,16 @@ function HeroSection() {
            então escrevemos o texto manualmente pra não quebrar build.
         */}
         <label
-          style={{
-            display: "block",
-            color: "rgba(255,255,255,0.9)",
-            fontSize: "14px",
-            marginBottom: "8px",
-          }}
-        >
-          Tell Kodiah what to build:
-        </label>
+  style={{
+    display: "block",
+    color: "rgba(255,255,255,0.9)",
+    fontSize: "14px",
+    marginBottom: "8px",
+  }}
+>
+  Tell Kodiah what to build:
+</label>
+
 
         <div
           style={{
