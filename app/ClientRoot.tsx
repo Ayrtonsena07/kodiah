@@ -95,7 +95,7 @@ function Header() {
               whiteSpace: "nowrap",
             }}
           >
-            {t.startButton /* "Start Building" / "Começar" / etc */}
+            {t.startButton}
           </button>
         </div>
       </div>
