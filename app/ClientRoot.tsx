@@ -49,6 +49,7 @@ function Header() {
                 "drop-shadow(0 0 10px rgba(246,226,122,0.45)) drop-shadow(0 0 25px rgba(199,146,47,0.25))",
             }}
           />
+
           <span
             style={{
               fontSize: "16px",
@@ -91,7 +92,7 @@ function Header() {
                 "0 10px 40px rgba(255,222,100,0.4), 0 2px 4px rgba(0,0,0,0.8)",
             }}
           >
-            {t.startButton /* <- ESTA CHAVE EXISTE SEGUNDO O TIPO DO ERRO */}
+            {t.startButton}
           </button>
         </div>
       </div>
@@ -153,9 +154,10 @@ function HeroSection() {
           maxWidth: "700px",
         }}
       >
-        {/* label acima do campo */}
-        {/* IMPORTANTE:   t.promptLabel NÃO EXISTE no tipo. 
-             ENTÃO vou usar um texto fixo pra não quebrar build. */}
+        {/* Label acima do campo
+           IMPORTANTE: sua tradução NÃO tem promptLabel,
+           então escrevemos o texto manualmente pra não quebrar build.
+        */}
         <label
           style={{
             display: "block",
@@ -206,7 +208,7 @@ function HeroSection() {
                 "0 15px 50px rgba(255,222,100,0.4), 0 2px 4px rgba(0,0,0,0.8)",
             }}
           >
-            {t.startButton /* usa a MESMA chave segura aqui */}
+            {t.startButton}
           </button>
         </div>
 
