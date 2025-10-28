@@ -1,50 +1,39 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
-import { translations, type LangCode } from "./translations";
+import React, { createContext, useContext, useState } from "react";
+import { translations } from "./translations";
 
-type LangContextType = {
-  lang: LangCode;
-  t: typeof translations["en"];
-  setLang: (l: LangCode) => void;
-};
+export type Lang = "en" | "pt" | "es";
 
-const LangContext = createContext<LangContextType | null>(null);
+type TranslationData = typeof translations.en;
+
+interface LanguageContextValue {
+  lang: Lang;
+  t: TranslationData;
+  setLang: (next: Lang) => void;
+}
+
+const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  // idioma inicial padrão -> inglês
-  const [lang, setLangState] = useState<LangCode>("en");
+  // idioma padrão: inglês
+  const [lang, setLang] = useState<Lang>("en");
 
-  // carrega idioma salvo no navegador
-  useEffect(() => {
-    const saved = window.localStorage.getItem("kodiah-lang") as LangCode | null;
-    if (saved && translations[saved]) {
-      setLangState(saved);
-    }
-  }, []);
-
-  // troca idioma e salva no navegador
-  function setLang(newLang: LangCode) {
-    setLangState(newLang);
-    window.localStorage.setItem("kodiah-lang", newLang);
-  }
+  const value: LanguageContextValue = {
+    lang,
+    t: translations[lang],
+    setLang,
+  };
 
   return (
-    <LangContext.Provider
-      value={{
-        lang,
-        t: translations[lang],
-        setLang,
-      }}
-    >
+    <LanguageContext.Provider value={value}>
       {children}
-    </LangContext.Provider>
+    </LanguageContext.Provider>
   );
 }
 
-// hook pra usar no resto do site
 export function useLanguage() {
-  const ctx = useContext(LangContext);
+  const ctx = useContext(LanguageContext);
   if (!ctx) {
     throw new Error("useLanguage must be used inside <LanguageProvider />");
   }
