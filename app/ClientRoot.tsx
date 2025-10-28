@@ -30,7 +30,7 @@ function Header() {
           color: "white",
         }}
       >
-        {/* ESQUERDA: logo + nome */}
+        {/* LOGO + NOME */}
         <div
           style={{
             display: "flex",
@@ -49,7 +49,6 @@ function Header() {
                 "drop-shadow(0 0 10px rgba(246,226,122,0.45)) drop-shadow(0 0 25px rgba(199,146,47,0.25))",
             }}
           />
-
           <span
             style={{
               fontSize: "16px",
@@ -57,45 +56,42 @@ function Header() {
               color: "white",
               fontFamily:
                 '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
-              lineHeight: 1.2,
             }}
           >
             Kodiah
           </span>
         </div>
 
-        {/* DIREITA: seletor de idioma + botão amarelo */}
+        {/* IDIOMA + BOTÃO */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "16px",
+            gap: "12px",
           }}
         >
-          {/* seletor de idiomas */}
+          {/* seletor de idioma */}
           <LanguageSelector />
 
-          {/* botão CTA principal do header */}
+          {/* botão dourado no header */}
           <button
             style={{
+              all: "unset",
+              cursor: "pointer",
               background:
-                "radial-gradient(circle at 20% 20%, #fff7c2 0%, #f6d76b 40%, #8a6520 100%)",
-              color: "black",
-              border: "1px solid rgba(255,255,255,0.4)",
-              borderRadius: "8px",
+                "radial-gradient(circle at 20% 20%, rgba(255,241,175,1) 0%, rgba(209,162,47,1) 40%, rgba(93,61,7,1) 100%)",
+              color: "#000",
               fontSize: "14px",
               fontWeight: 500,
-              padding: "10px 16px",
-              minWidth: "140px",
-              boxShadow:
-                "0 0 20px rgba(255,220,120,0.4), 0 20px 60px rgba(0,0,0,0.8)",
-              cursor: "pointer",
-              lineHeight: 1.2,
+              padding: "10px 14px",
+              borderRadius: "8px",
+              minWidth: "110px",
               textAlign: "center",
-              whiteSpace: "nowrap",
+              boxShadow:
+                "0 10px 40px rgba(255,222,100,0.4), 0 2px 4px rgba(0,0,0,0.8)",
             }}
           >
-            {t.startButton}
+            {t.startButton /* <- ESTA CHAVE EXISTE SEGUNDO O TIPO DO ERRO */}
           </button>
         </div>
       </div>
@@ -109,30 +105,21 @@ function HeroSection() {
   return (
     <section
       style={{
-        position: "relative",
-        zIndex: 1,
         maxWidth: "1280px",
         margin: "0 auto",
-        padding: "64px 24px 120px 24px",
+        padding: "48px 24px 80px",
         color: "white",
-        fontFamily:
-          '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+        position: "relative",
       }}
     >
       {/* Título principal */}
       <h1
         style={{
-          maxWidth: "720px",
-          fontSize: "42px",
-          lineHeight: 1.15,
-          fontWeight: 600,
-          background:
-            "linear-gradient(to bottom right, #fff 0%, #f6e08a 40%, #8a6a2a 80%)",
-          WebkitBackgroundClip: "text",
-          color: "transparent",
-          textShadow: "0 15px 40px rgba(0,0,0,0.8)",
-          margin: 0,
-          marginBottom: "24px",
+          fontSize: "clamp(2rem, 2vw, 2.5rem)",
+          fontWeight: 500,
+          lineHeight: 1.2,
+          color: "white",
+          maxWidth: "640px",
         }}
       >
         {t.heroHeadline}
@@ -141,91 +128,85 @@ function HeroSection() {
       {/* Subtítulo */}
       <p
         style={{
-          maxWidth: "680px",
-          fontSize: "18px",
+          marginTop: "16px",
+          fontSize: "16px",
           lineHeight: 1.5,
-          color: "rgba(255,255,255,0.8)",
-          fontWeight: 400,
-          margin: 0,
-          marginBottom: "32px",
-          textShadow: "0 20px 50px rgba(0,0,0,0.9)",
+          color: "rgba(255,255,255,0.7)",
+          maxWidth: "640px",
         }}
       >
         {t.heroSub}
       </p>
 
-      {/* BLOCO: campo "Tell Kodiah..." + botão Generate */}
+      {/* BLOCO DO INPUT + BOTÃO */}
       <div
         style={{
-          position: "relative",
+          marginTop: "32px",
           background:
-            "radial-gradient(circle at 30% 20%, rgba(246,226,122,0.18) 0%, rgba(0,0,0,0) 60%)",
-          border: "1px solid rgba(255,255,255,0.1)",
-          backgroundColor: "rgba(10,10,10,0.4)",
-          boxShadow:
-            "0 30px 120px rgba(0,0,0,0.9), 0 0 120px rgba(255,215,100,0.08)",
+            "radial-gradient(circle at 20% 20%, rgba(255,241,175,0.08) 0%, rgba(0,0,0,0) 70%)",
+          border: "1px solid rgba(255,255,255,0.12)",
           borderRadius: "8px",
-          padding: "24px",
-          maxWidth: "720px",
-          marginBottom: "32px",
+          padding: "20px",
+          position: "relative",
+          boxShadow:
+            "0 30px 90px rgba(255,222,100,0.08), 0 60px 200px rgba(0,0,0,0.9)",
+          maxWidth: "700px",
         }}
       >
+        {/* label acima do campo */}
+        {/* IMPORTANTE:   t.promptLabel NÃO EXISTE no tipo. 
+             ENTÃO vou usar um texto fixo pra não quebrar build. */}
         <label
           style={{
             display: "block",
-            fontSize: "15px",
-            fontWeight: 400,
-            color: "rgba(255,255,255,0.75)",
-            marginBottom: "12px",
+            color: "rgba(255,255,255,0.9)",
+            fontSize: "14px",
+            marginBottom: "8px",
           }}
         >
-          {t.promptLabel /* ex: 'Tell Kodiah what to build:' */}
+          Tell Kodiah what to build:
         </label>
 
         <div
           style={{
             display: "flex",
-            alignItems: "stretch",
+            flexWrap: "nowrap",
             gap: "12px",
           }}
         >
           <input
+            type="text"
+            defaultValue={t.promptPlaceholder}
             style={{
               flex: 1,
-              backgroundColor: "rgba(0,0,0,0.6)",
-              border: "1px solid rgba(255,255,255,0.2)",
-              borderRadius: "6px",
+              backgroundColor: "#000",
               color: "white",
-              fontSize: "15px",
-              padding: "14px 16px",
+              fontSize: "14px",
+              borderRadius: "6px",
+              border: "1px solid rgba(255,255,255,0.2)",
+              padding: "12px",
               outline: "none",
-              lineHeight: 1.4,
-              boxShadow:
-                "0 0 50px rgba(255,255,255,0.07), 0 30px 80px rgba(0,0,0,0.9)",
             }}
-            placeholder={t.promptPlaceholder}
           />
 
           <button
             style={{
-              flexShrink: 0,
+              all: "unset",
+              cursor: "pointer",
               background:
-                "radial-gradient(circle at 20% 20%, #fff7c2 0%, #f6d76b 40%, #8a6520 100%)",
-              color: "black",
-              border: "1px solid rgba(255,255,255,0.4)",
-              borderRadius: "8px",
+                "radial-gradient(circle at 20% 20%, rgba(255,241,175,1) 0%, rgba(209,162,47,1) 40%, rgba(93,61,7,1) 100%)",
+              color: "#000",
               fontSize: "14px",
               fontWeight: 500,
-              padding: "14px 16px",
-              minWidth: "110px",
-              cursor: "pointer",
-              lineHeight: 1.2,
+              padding: "12px 16px",
+              borderRadius: "8px",
+              minWidth: "100px",
               textAlign: "center",
               boxShadow:
-                "0 0 20px rgba(255,220,120,0.4), 0 20px 60px rgba(0,0,0,0.8)",
+                "0 15px 50px rgba(255,222,100,0.4), 0 2px 4px rgba(0,0,0,0.8)",
             }}
           >
-            {t.generateButton /* ex: "Generate" */}
+            {t.startButton /* usa a MESMA chave segura aqui */}
           </button>
         </div>
 
@@ -237,45 +218,46 @@ function HeroSection() {
             color: "rgba(255,255,255,0.5)",
           }}
         >
-          {t.betaNote /* ex: 'Private beta — limited seats.' */}
+          Private beta — limited seats.
         </div>
       </div>
 
       {/* 3 cards de valor */}
       <div
         style={{
+          marginTop: "40px",
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,360px),1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(320px,100%),1fr))",
           gap: "16px",
-          maxWidth: "1080px",
+          maxWidth: "1000px",
         }}
       >
         {/* Card 1 */}
         <div
           style={{
-            backgroundColor: "rgba(13,13,13,0.4)",
+            backgroundColor: "rgba(0,0,0,0.4)",
             border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "8px",
             padding: "20px",
+            color: "white",
             boxShadow:
-              "0 40px 120px rgba(0,0,0,0.9), 0 0 120px rgba(255,215,100,0.05)",
+              "0 40px 120px rgba(0,0,0,0.9), 0 10px 30px rgba(255,222,100,0.05) inset",
           }}
         >
           <div
             style={{
               fontSize: "15px",
               fontWeight: 500,
-              color: "white",
               marginBottom: "8px",
-              lineHeight: 1.3,
+              color: "white",
             }}
           >
-            {t.badgeAiTitle /* ex: 'Built with AI' */}
+            {t.badgeAiTitle}
           </div>
           <div
             style={{
               fontSize: "14px",
-              lineHeight: 1.45,
+              lineHeight: 1.5,
               color: "rgba(255,255,255,0.7)",
             }}
           >
@@ -286,29 +268,29 @@ function HeroSection() {
         {/* Card 2 */}
         <div
           style={{
-            backgroundColor: "rgba(13,13,13,0.4)",
+            backgroundColor: "rgba(0,0,0,0.4)",
             border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "8px",
             padding: "20px",
+            color: "white",
             boxShadow:
-              "0 40px 120px rgba(0,0,0,0.9), 0 0 120px rgba(255,215,100,0.05)",
+              "0 40px 120px rgba(0,0,0,0.9), 0 10px 30px rgba(255,222,100,0.05) inset",
           }}
         >
           <div
             style={{
               fontSize: "15px",
               fontWeight: 500,
-              color: "white",
               marginBottom: "8px",
-              lineHeight: 1.3,
+              color: "white",
             }}
           >
-            {t.badgeTeamTitle /* ex: 'Refined by humans' */}
+            {t.badgeTeamTitle}
           </div>
           <div
             style={{
               fontSize: "14px",
-              lineHeight: 1.45,
+              lineHeight: 1.5,
               color: "rgba(255,255,255,0.7)",
             }}
           >
@@ -319,29 +301,29 @@ function HeroSection() {
         {/* Card 3 */}
         <div
           style={{
-            backgroundColor: "rgba(13,13,13,0.4)",
+            backgroundColor: "rgba(0,0,0,0.4)",
             border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "8px",
             padding: "20px",
+            color: "white",
             boxShadow:
-              "0 40px 120px rgba(0,0,0,0.9), 0 0 120px rgba(255,215,100,0.05)",
+              "0 40px 120px rgba(0,0,0,0.9), 0 10px 30px rgba(255,222,100,0.05) inset",
           }}
         >
           <div
             style={{
               fontSize: "15px",
               fontWeight: 500,
-              color: "white",
               marginBottom: "8px",
-              lineHeight: 1.3,
+              color: "white",
             }}
           >
-            {t.badgeLaunchTitle /* ex: 'Ready to sell' */}
+            {t.badgeLaunchTitle}
           </div>
           <div
             style={{
               fontSize: "14px",
-              lineHeight: 1.45,
+              lineHeight: 1.5,
               color: "rgba(255,255,255,0.7)",
             }}
           >
@@ -350,47 +332,48 @@ function HeroSection() {
         </div>
       </div>
 
-      {/* Rodapé curto abaixo dos cards */}
+      {/* Rodapé / tagline */}
       <div
         style={{
           marginTop: "48px",
           fontSize: "13px",
-          color: "rgba(255,255,255,0.6)",
           lineHeight: 1.4,
-          textShadow: "0 20px 60px rgba(0,0,0,0.9)",
+          color: "rgba(255,255,255,0.6)",
         }}
       >
-        {t.footerTagline /* ex: 'Kodiah — Intelligence has a new signature.' */}
-        <br />
-        © 2025 Kodiah Inc. All rights reserved.
+        {t.footerTagline}
       </div>
     </section>
   );
 }
 
+function PageContent() {
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        background:
+          "radial-gradient(circle at 20% 20%, rgba(255,241,175,0.08) 0%, rgba(15,16,24,1) 60%)",
+        backgroundColor: "#0f1018",
+        position: "relative",
+        overflow: "hidden",
+        color: "white",
+      }}
+    >
+      {/* brilho que segue o mouse */}
+      <MouseGlow />
+
+      <Header />
+      <HeroSection />
+    </div>
+  );
+}
+
+// Provider global de idioma
 export default function ClientRoot() {
   return (
     <LanguageProvider>
-      <div
-        style={{
-          minHeight: "100vh",
-          width: "100%",
-          background:
-            "radial-gradient(circle at 20% 20%, rgba(0,0,0,1) 0%, rgba(10,10,10,1) 40%, rgba(10,10,10,0) 70%), radial-gradient(circle at 80% 20%, rgba(20,20,30,1) 0%, rgba(10,10,10,1) 40%, rgba(10,10,10,0) 70%), radial-gradient(circle at 50% 80%, rgba(10,10,10,1) 0%, rgba(0,0,0,1) 60%)",
-          backgroundColor: "black",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        {/* brilho que segue o mouse */}
-        <MouseGlow />
-
-        {/* header fixo topo */}
-        <Header />
-
-        {/* conteúdo principal */}
-        <HeroSection />
-      </div>
+      <PageContent />
     </LanguageProvider>
   );
 }
