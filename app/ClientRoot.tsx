@@ -30,7 +30,7 @@ function Header() {
           color: "white",
         }}
       >
-        {/* LOGO + NOME */}
+        {/* ESQUERDA: logo + nome */}
         <div
           style={{
             display: "flex",
@@ -57,14 +57,14 @@ function Header() {
               color: "white",
               fontFamily:
                 '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
-              letterSpacing: "-0.03em",
+              lineHeight: 1.2,
             }}
           >
             Kodiah
           </span>
         </div>
 
-        {/* LADO DIREITO DO HEADER */}
+        {/* DIREITA: seletor de idioma + botão amarelo */}
         <div
           style={{
             display: "flex",
@@ -72,30 +72,30 @@ function Header() {
             gap: "16px",
           }}
         >
-          {/* Seletor de idioma (globo + dropdown) */}
+          {/* seletor de idiomas */}
           <LanguageSelector />
 
-          {/* Botão dourado no header (call to action) */}
+          {/* botão CTA principal do header */}
           <button
             style={{
-              all: "unset",
-              cursor: "pointer",
               background:
-                "radial-gradient(circle at 0% 0%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%), linear-gradient(to right, #d4af37, #8f6b15)",
-              color: "#000",
-              fontWeight: 600,
-              fontSize: "15px",
-              lineHeight: "1.2",
-              padding: "10px 16px",
+                "radial-gradient(circle at 20% 20%, #fff7c2 0%, #f6d76b 40%, #8a6520 100%)",
+              color: "black",
+              border: "1px solid rgba(255,255,255,0.4)",
               borderRadius: "8px",
-              boxShadow:
-                "0 10px 30px rgba(255,220,120,0.15), 0 0 40px rgba(255,200,80,0.4)",
+              fontSize: "14px",
+              fontWeight: 500,
+              padding: "10px 16px",
               minWidth: "140px",
+              boxShadow:
+                "0 0 20px rgba(255,220,120,0.4), 0 20px 60px rgba(0,0,0,0.8)",
+              cursor: "pointer",
+              lineHeight: 1.2,
               textAlign: "center",
-              border: "1px solid rgba(255,255,255,0.3)",
+              whiteSpace: "nowrap",
             }}
           >
-            {t.startButton /* <-- AGORA EXISTE */}
+            {t.startButton /* "Start Building" / "Começar" / etc */}
           </button>
         </div>
       </div>
@@ -110,239 +110,239 @@ function HeroSection() {
     <section
       style={{
         position: "relative",
+        zIndex: 1,
         maxWidth: "1280px",
         margin: "0 auto",
-        padding: "48px 24px 80px",
+        padding: "64px 24px 120px 24px",
         color: "white",
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
       }}
     >
-      {/* Título + Subtítulo */}
+      {/* Título principal */}
       <h1
         style={{
-          fontSize: "clamp(2rem,2.5vw,2.5rem)",
+          maxWidth: "720px",
+          fontSize: "42px",
+          lineHeight: 1.15,
           fontWeight: 600,
-          lineHeight: 1.2,
-          maxWidth: "800px",
-          color: "white",
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+          background:
+            "linear-gradient(to bottom right, #fff 0%, #f6e08a 40%, #8a6a2a 80%)",
+          WebkitBackgroundClip: "text",
+          color: "transparent",
+          textShadow: "0 15px 40px rgba(0,0,0,0.8)",
+          margin: 0,
+          marginBottom: "24px",
         }}
       >
         {t.heroHeadline}
       </h1>
 
+      {/* Subtítulo */}
       <p
         style={{
-          marginTop: "16px",
+          maxWidth: "680px",
           fontSize: "18px",
           lineHeight: 1.5,
-          maxWidth: "780px",
           color: "rgba(255,255,255,0.8)",
           fontWeight: 400,
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+          margin: 0,
+          marginBottom: "32px",
+          textShadow: "0 20px 50px rgba(0,0,0,0.9)",
         }}
       >
         {t.heroSub}
       </p>
 
-      {/* Caixa black glass com input + botão */}
+      {/* BLOCO: campo "Tell Kodiah..." + botão Generate */}
       <div
         style={{
-          marginTop: "32px",
-          maxWidth: "760px",
-          background:
-            "radial-gradient(circle at 20% 10%, rgba(255,255,200,0.07) 0%, rgba(0,0,0,0) 60%), rgba(0,0,0,0.4)",
-          border: "1px solid rgba(255,255,255,0.1)",
-          borderRadius: "10px",
-          boxShadow:
-            "0 60px 160px rgba(255,220,120,0.07), 0 0 120px rgba(255,200,80,0.12)",
-          padding: "20px",
           position: "relative",
+          background:
+            "radial-gradient(circle at 30% 20%, rgba(246,226,122,0.18) 0%, rgba(0,0,0,0) 60%)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          backgroundColor: "rgba(10,10,10,0.4)",
+          boxShadow:
+            "0 30px 120px rgba(0,0,0,0.9), 0 0 120px rgba(255,215,100,0.08)",
+          borderRadius: "8px",
+          padding: "24px",
+          maxWidth: "720px",
+          marginBottom: "32px",
         }}
       >
-        {/* Label acima do input */}
-        <div
+        <label
           style={{
-            color: "rgba(255,255,255,0.8)",
-            fontSize: "14px",
-            marginBottom: "8px",
-            fontFamily:
-              '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+            display: "block",
+            fontSize: "15px",
+            fontWeight: 400,
+            color: "rgba(255,255,255,0.75)",
+            marginBottom: "12px",
           }}
         >
-          Tell Kodiah what to build:
-        </div>
+          {t.promptLabel /* ex: 'Tell Kodiah what to build:' */}
+        </label>
 
-        {/* Input + botão generate */}
         <div
           style={{
             display: "flex",
+            alignItems: "stretch",
             gap: "12px",
-            alignItems: "center",
           }}
         >
           <input
-            defaultValue={t.promptPlaceholder}
             style={{
               flex: 1,
               backgroundColor: "rgba(0,0,0,0.6)",
-              border: "1px solid rgba(255,255,255,0.25)",
+              border: "1px solid rgba(255,255,255,0.2)",
               borderRadius: "6px",
               color: "white",
               fontSize: "15px",
-              lineHeight: "1.4",
               padding: "14px 16px",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+              outline: "none",
+              lineHeight: 1.4,
+              boxShadow:
+                "0 0 50px rgba(255,255,255,0.07), 0 30px 80px rgba(0,0,0,0.9)",
             }}
+            placeholder={t.promptPlaceholder}
           />
 
           <button
             style={{
-              all: "unset",
-              cursor: "pointer",
+              flexShrink: 0,
               background:
-                "radial-gradient(circle at 0% 0%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%), linear-gradient(to right, #d4af37, #8f6b15)",
-              color: "#000",
-              fontWeight: 600,
-              fontSize: "15px",
-              lineHeight: 1.2,
-              padding: "12px 16px",
-              minWidth: "110px",
+                "radial-gradient(circle at 20% 20%, #fff7c2 0%, #f6d76b 40%, #8a6520 100%)",
+              color: "black",
+              border: "1px solid rgba(255,255,255,0.4)",
               borderRadius: "8px",
+              fontSize: "14px",
+              fontWeight: 500,
+              padding: "14px 16px",
+              minWidth: "110px",
+              cursor: "pointer",
+              lineHeight: 1.2,
               textAlign: "center",
-              border: "1px solid rgba(255,255,255,0.3)",
               boxShadow:
-                "0 20px 60px rgba(255,220,120,0.18), 0 0 60px rgba(255,200,80,0.3)",
+                "0 0 20px rgba(255,220,120,0.4), 0 20px 60px rgba(0,0,0,0.8)",
             }}
           >
-            Generate
+            {t.generateButton /* ex: "Generate" */}
           </button>
         </div>
 
-        {/* Aviso beta */}
         <div
           style={{
             marginTop: "12px",
             fontSize: "13px",
+            lineHeight: 1.4,
             color: "rgba(255,255,255,0.5)",
-            fontFamily:
-              '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
           }}
         >
-          Private beta — limited seats.
+          {t.betaNote /* ex: 'Private beta — limited seats.' */}
         </div>
       </div>
 
-      {/* 3 cards: Built with AI / Refined by humans / Ready to sell */}
+      {/* 3 cards de valor */}
       <div
         style={{
-          marginTop: "32px",
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,360px),1fr))",
           gap: "16px",
+          maxWidth: "1080px",
         }}
       >
+        {/* Card 1 */}
         <div
           style={{
-            border: "1px solid rgba(255,255,255,0.1)",
+            backgroundColor: "rgba(13,13,13,0.4)",
+            border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "8px",
-            padding: "16px 20px",
-            background:
-              "radial-gradient(circle at 0% 0%, rgba(255,255,200,0.05) 0%, rgba(0,0,0,0) 60%), rgba(0,0,0,0.3)",
-            boxShadow: "0 30px 80px rgba(0,0,0,0.6)",
+            padding: "20px",
+            boxShadow:
+              "0 40px 120px rgba(0,0,0,0.9), 0 0 120px rgba(255,215,100,0.05)",
           }}
         >
           <div
             style={{
-              color: "white",
               fontSize: "15px",
               fontWeight: 500,
+              color: "white",
               marginBottom: "8px",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+              lineHeight: 1.3,
             }}
           >
-            {t.badgeAiTitle}
+            {t.badgeAiTitle /* ex: 'Built with AI' */}
           </div>
           <div
             style={{
-              color: "rgba(255,255,255,0.7)",
               fontSize: "14px",
-              lineHeight: "1.5",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+              lineHeight: 1.45,
+              color: "rgba(255,255,255,0.7)",
             }}
           >
             {t.badgeAiDesc}
           </div>
         </div>
 
+        {/* Card 2 */}
         <div
           style={{
-            border: "1px solid rgba(255,255,255,0.1)",
+            backgroundColor: "rgba(13,13,13,0.4)",
+            border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "8px",
-            padding: "16px 20px",
-            background:
-              "radial-gradient(circle at 0% 0%, rgba(255,255,200,0.05) 0%, rgba(0,0,0,0) 60%), rgba(0,0,0,0.3)",
-            boxShadow: "0 30px 80px rgba(0,0,0,0.6)",
+            padding: "20px",
+            boxShadow:
+              "0 40px 120px rgba(0,0,0,0.9), 0 0 120px rgba(255,215,100,0.05)",
           }}
         >
           <div
             style={{
-              color: "white",
               fontSize: "15px",
               fontWeight: 500,
+              color: "white",
               marginBottom: "8px",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+              lineHeight: 1.3,
             }}
           >
-            {t.badgeTeamTitle}
+            {t.badgeTeamTitle /* ex: 'Refined by humans' */}
           </div>
           <div
             style={{
-              color: "rgba(255,255,255,0.7)",
               fontSize: "14px",
-              lineHeight: "1.5",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+              lineHeight: 1.45,
+              color: "rgba(255,255,255,0.7)",
             }}
           >
             {t.badgeTeamDesc}
           </div>
         </div>
 
+        {/* Card 3 */}
         <div
           style={{
-            border: "1px solid rgba(255,255,255,0.1)",
+            backgroundColor: "rgba(13,13,13,0.4)",
+            border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "8px",
-            padding: "16px 20px",
-            background:
-              "radial-gradient(circle at 0% 0%, rgba(255,255,200,0.05) 0%, rgba(0,0,0,0) 60%), rgba(0,0,0,0.3)",
-            boxShadow: "0 30px 80px rgba(0,0,0,0.6)",
+            padding: "20px",
+            boxShadow:
+              "0 40px 120px rgba(0,0,0,0.9), 0 0 120px rgba(255,215,100,0.05)",
           }}
         >
           <div
             style={{
-              color: "white",
               fontSize: "15px",
               fontWeight: 500,
+              color: "white",
               marginBottom: "8px",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+              lineHeight: 1.3,
             }}
           >
-            {t.badgeLaunchTitle}
+            {t.badgeLaunchTitle /* ex: 'Ready to sell' */}
           </div>
           <div
             style={{
-              color: "rgba(255,255,255,0.7)",
               fontSize: "14px",
-              lineHeight: "1.5",
-              fontFamily:
-                '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+              lineHeight: 1.45,
+              color: "rgba(255,255,255,0.7)",
             }}
           >
             {t.badgeLaunchDesc}
@@ -350,22 +350,19 @@ function HeroSection() {
         </div>
       </div>
 
-      {/* Rodapé curto */}
+      {/* Rodapé curto abaixo dos cards */}
       <div
         style={{
-          marginTop: "40px",
+          marginTop: "48px",
           fontSize: "13px",
-          lineHeight: 1.4,
           color: "rgba(255,255,255,0.6)",
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, Inter, Roboto, "SF Pro Display", system-ui, sans-serif',
+          lineHeight: 1.4,
+          textShadow: "0 20px 60px rgba(0,0,0,0.9)",
         }}
       >
-        {t.footerTagline}
+        {t.footerTagline /* ex: 'Kodiah — Intelligence has a new signature.' */}
         <br />
-        <span style={{ color: "rgba(255,255,255,0.5)" }}>
-          © 2025 Kodiah Inc. All rights reserved.
-        </span>
+        © 2025 Kodiah Inc. All rights reserved.
       </div>
     </section>
   );
@@ -376,17 +373,19 @@ export default function ClientRoot() {
     <LanguageProvider>
       <div
         style={{
-          background:
-            "radial-gradient(circle at 20% 0%, rgba(255,255,150,0.06) 0%, rgba(0,0,0,0) 60%), radial-gradient(circle at 80% 20%, rgba(90,110,255,0.07) 0%, rgba(0,0,0,0) 60%), radial-gradient(circle at 50% 80%, rgba(255,180,50,0.08) 0%, rgba(0,0,0,0) 70%), linear-gradient(#0f1117 0%, #1a1d29 60%, #1a1d29 100%)",
           minHeight: "100vh",
+          width: "100%",
+          background:
+            "radial-gradient(circle at 20% 20%, rgba(0,0,0,1) 0%, rgba(10,10,10,1) 40%, rgba(10,10,10,0) 70%), radial-gradient(circle at 80% 20%, rgba(20,20,30,1) 0%, rgba(10,10,10,1) 40%, rgba(10,10,10,0) 70%), radial-gradient(circle at 50% 80%, rgba(10,10,10,1) 0%, rgba(0,0,0,1) 60%)",
+          backgroundColor: "black",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* luz que segue o mouse */}
+        {/* brilho que segue o mouse */}
         <MouseGlow />
 
-        {/* header fixo no topo */}
+        {/* header fixo topo */}
         <Header />
 
         {/* conteúdo principal */}
