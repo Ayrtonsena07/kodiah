@@ -1,15 +1,22 @@
 // app/translations.ts
+
 export const translations = {
   en: {
-    // hero
+    // Hero
     heroHeadline: "Shape your vision into reality.",
     heroSub:
       "Tell Kodiah what you want. We build intelligent, connected applications — fast, reliable, and beautifully designed. No code needed.",
 
-    // caixa de prompt
+    // Label acima do input
+    promptLabel: "Tell Kodiah what to build:",
+
+    // Placeholder dentro do input
     promptPlaceholder: "Build me an appointment app that takes payments",
 
-    // cards
+    // Botão de gerar
+    generateButton: "Generate",
+
+    // Cards
     badgeAiTitle: "Built with AI",
     badgeAiDesc:
       "You describe the product. Kodiah drafts it in minutes.",
@@ -20,24 +27,28 @@ export const translations = {
 
     badgeLaunchTitle: "Ready to sell",
     badgeLaunchDesc:
-      "Hosting, login, dashboard, payments. You don’t just “test” — you launch.",
+      "Hosting, login, dashboard, payments. You don't just “test” — you launch.",
 
-    // rodapé
+    // Rodapé
     footerTagline: "Kodiah — Intelligence has a new signature.",
 
-    // botão principal
+    // Botão header “call to action”
     startButton: "Start Building",
 
-    // seletor de idioma
+    // Coisa do seletor de idioma
     languageLabel: "EN",
   },
 
   pt: {
     heroHeadline: "Dê forma à sua visão.",
     heroSub:
-      "Fale pra Kodiah o que você quer. Nós construímos aplicativos inteligentes e conectados — rápido, confiável e com design impecável. Sem código.",
+      "Fala pra Kodiah o que você quer. A gente constrói aplicativos inteligentes e conectados — rápido, confiável e com design impecável. Sem código.",
+
+    promptLabel: "Diga à Kodiah o que construir:",
     promptPlaceholder:
       "Crie um app de agendamento que aceite pagamentos",
+
+    generateButton: "Gerar",
 
     badgeAiTitle: "Feito com IA",
     badgeAiDesc:
@@ -62,8 +73,12 @@ export const translations = {
     heroHeadline: "Convierte tu visión en realidad.",
     heroSub:
       "Dile a Kodiah lo que quieres. Creamos aplicaciones inteligentes y conectadas — rápido, confiable y con diseño impecable. Sin código.",
+
+    promptLabel: "Dile a Kodiah qué construir:",
     promptPlaceholder:
       "Crea una app de reservas que acepte pagos",
+
+    generateButton: "Generar",
 
     badgeAiTitle: "Creado con IA",
     badgeAiDesc:
@@ -85,5 +100,6 @@ export const translations = {
   },
 };
 
-export type LangKey = keyof typeof translations;
-export type Translation = (typeof translations)[LangKey];
+// Tipagem de apoio (garante que ClientRoot.tsx entenda o formato)
+export type LocaleKey = keyof typeof translations;
+export type LocaleStrings = (typeof translations)[LocaleKey];
