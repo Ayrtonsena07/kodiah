@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import ClientRoot from "./ClientRoot";
 
 export const metadata: Metadata = {
-  title: "Kodiah — From idea to product",
+  title: "Kodiah – Build intelligent apps effortlessly",
   description:
-    "Describe what you want. Kodiah builds it: web apps, dashboards, automations, ready to launch.",
+    "AI-powered platform for creating smart, modern applications.",
 };
 
 export default function RootLayout({
@@ -15,15 +15,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/* body aqui é simples. nada de hook. */}
       <body
         style={{
           margin: 0,
-          padding: 0,
+          backgroundColor: "#0b0d12",
+          color: "white",
         }}
       >
-        {/* Tudo que precisa de React client fica dentro do ClientRoot */}
-        <ClientRoot>{children}</ClientRoot>
+        <ClientRoot />
+        {/* children ainda existe por padrão */}
+        <main style={{ display: "none" }}>{children}</main>
       </body>
     </html>
   );
