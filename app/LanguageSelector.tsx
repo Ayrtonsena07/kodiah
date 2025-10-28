@@ -2,16 +2,12 @@
 
 import { useState } from "react";
 import { useLanguage } from "./LanguageContext";
-import type { LangCode } from "./translations";
 
-const LANG_OPTIONS: { code: LangCode; label: string }[] = [
-  { code: "de", label: "Deutsch" },
+const LANG_OPTIONS = [
   { code: "en", label: "English" },
-  { code: "es", label: "Español" },
-  { code: "fr", label: "Français" },
   { code: "pt", label: "Português" },
-  { code: "ja", label: "日本語" },
-];
+  { code: "es", label: "Español" },
+] as const;
 
 export default function LanguageSelector() {
   const { lang, setLang } = useLanguage();
@@ -19,95 +15,108 @@ export default function LanguageSelector() {
 
   return (
     <div style={{ position: "relative" }}>
-      {/* Botão globo */}
+      {/* Botão do globo */}
       <button
         onClick={() => setOpen(!open)}
         style={{
+          all: "unset",
+          cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          width: "32px",
-          height: "32px",
-          background: "rgba(255,255,255,0.07)",
-          border: "1px solid rgba(255,255,255,0.18)",
-          borderRadius: "999px",
-          cursor: "pointer",
+          gap: "8px",
+          padding: "8px 12px",
+          background:
+            "radial-gradient(circle at 20% 20%, rgba(60,60,60,0.6) 0%, rgba(0,0,0,0.0) 60%)",
+          borderRadius: "10px",
+          border: "1px solid rgba(255,255,255,0.08)",
           color: "white",
-          boxShadow:
-            "0 10px 30px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)",
+          fontSize: "14px",
+          lineHeight: 1.2,
+          minWidth: "42px",
         }}
-        aria-label="Change language"
       >
-        {/* ícone globo em traço */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+        {/* pequeno globo (ícone em linha) */}
+        <span
+          style={{
+            width: "16px",
+            height: "16px",
+            display: "inline-block",
+            borderRadius: "50%",
+            border: "1px solid rgba(255,255,255,0.6)",
+            position: "relative",
+          }}
         >
-          <circle cx="12" cy="12" r="10" />
-          <path d="M2 12h20" />
-          <path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z" />
-        </svg>
+          <span
+            style={{
+              position: "absolute",
+              left: "50%",
+              top: "0",
+              bottom: "0",
+              width: "1px",
+              background: "rgba(255,255,255,0.6)",
+              transform: "translateX(-50%)",
+            }}
+          />
+          <span
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "0",
+              right: "0",
+              height: "1px",
+              background: "rgba(255,255,255,0.6)",
+              transform: "translateY(-50%)",
+            }}
+          />
+        </span>
+
+        <span style={{ color: "rgba(255,255,255,0.7)" }}>{lang.toUpperCase()}</span>
       </button>
 
+      {/* Dropdown */}
       {open && (
         <div
           style={{
             position: "absolute",
             right: 0,
-            top: "120%",
-            minWidth: "190px",
-            backgroundColor: "#ffffff",
-            borderRadius: "10px",
-            border: "1px solid rgba(0,0,0,0.07)",
+            marginTop: "8px",
+            minWidth: "160px",
+            backgroundColor: "rgba(15,15,20,0.95)",
+            borderRadius: "12px",
+            border: "1px solid rgba(255,255,255,0.08)",
             boxShadow:
-              "0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(0,0,0,0.4)",
-            padding: "10px 0",
-            fontSize: "15px",
-            lineHeight: "22px",
-            color: "#000",
-            zIndex: 9999,
+              "0 30px 80px rgba(0,0,0,0.7), 0 60px 80px rgba(0,0,0,0.4)",
+            padding: "8px 0",
+            zIndex: 999,
           }}
         >
-          {LANG_OPTIONS.map((option) => (
+          {LANG_OPTIONS.map((opt) => (
             <button
-              key={option.code}
+              key={opt.code}
               onClick={() => {
-                setLang(option.code);
+                setLang(opt.code as any);
                 setOpen(false);
               }}
               style={{
                 all: "unset",
                 display: "block",
                 width: "100%",
-                padding: "12px 16px",
-                cursor: "pointer",
                 textAlign: "left",
-                color: "#000",
-                fontWeight: option.code === lang ? 600 : 400,
+                padding: "10px 16px",
+                cursor: "pointer",
+                fontSize: "14px",
+                lineHeight: "20px",
+                color:
+                  opt.code === lang
+                    ? "rgb(255, 220, 130)"
+                    : "rgba(255,255,255,0.9)",
                 backgroundColor:
-                  option.code === lang
-                    ? "rgba(0,0,0,0.05)"
-                    : "transparent",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-                  "rgba(0,0,0,0.05)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-                  option.code === lang
-                    ? "rgba(0,0,0,0.05)"
-                    : "transparent";
+                  opt.code === lang ? "rgba(255,220,130,0.07)" : "transparent",
+                fontWeight: opt.code === lang ? 500 : 400,
               }}
             >
-              {option.label}
+              {opt.label}
             </button>
           ))}
         </div>
