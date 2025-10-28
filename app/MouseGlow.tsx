@@ -1,58 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function MouseGlow() {
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const glowRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     function handleMove(e: MouseEvent) {
-      setPos({
-        x: e.clientX,
-        y: e.clientY,
-      });
+      if (!glowRef.current) return;
+      const size = 260;
+      glowRef.current.style.opacity = "1";
+      glowRef.current.style.left = `${e.clientX - size / 2}px`;
+      glowRef.current.style.top = `${e.clientY - size / 2}px`;
     }
-
     window.addEventListener("pointermove", handleMove);
-    return () => window.removeEventListener("pointermove", handleMove);
+    return () => {
+      window.removeEventListener("pointermove", handleMove);
+    };
   }, []);
-
-  // estilo:
-  // - posição fixa
-  // - pointerEvents: "none" pra não bloquear clique
-  // - mixBlendMode: "screen" ou "plus-lighter" pra dar aquele brilho
-  // - degrade dourado/transparente
-  // - blur forte
 
   return (
     <div
+      ref={glowRef}
       style={{
         position: "fixed",
         left: 0,
         top: 0,
-        width: "100vw",
-        height: "100vh",
+        width: "260px",
+        height: "260px",
+        borderRadius: "50%",
+        background:
+          "radial-gradient(circle at 50% 50%, rgba(255,220,130,0.18) 0%, rgba(0,0,0,0) 70%)",
+        filter: "blur(50px)",
+        opacity: 0,
         pointerEvents: "none",
-        zIndex: 5, // fica acima do background, mas abaixo do conteúdo do site
+        zIndex: 5,
         mixBlendMode: "screen",
       }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          left: pos.x - 150, // centralizar
-          top: pos.y - 150,
-          width: 300,
-          height: 300,
-          borderRadius: "999px",
-          background:
-            "radial-gradient(circle at 50% 50%, rgba(246,226,122,0.28) 0%, rgba(199,146,47,0.05) 40%, rgba(0,0,0,0) 70%)",
-          filter: "blur(40px)",
-          opacity: 0.6,
-          transition: "transform 0.08s linear",
-          transform: "translateZ(0)",
-        }}
-      />
-    </div>
+    />
   );
 }
