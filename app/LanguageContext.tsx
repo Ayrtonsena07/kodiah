@@ -1,33 +1,34 @@
 "use client";
+import React, { createContext, useContext, useMemo, useState } from "react";
+import { translations, type Lang, type TDict } from "./translations";
 
-import { createContext, useContext, useState, ReactNode } from "react";
-import { translations, type LangKey, type Translation } from "./translations";
-
-type LangContextShape = {
-  lang: LangKey;
-  setLang: (l: LangKey) => void;
-  t: Translation;
+type Ctx = {
+  lang: Lang;
+  setLang: (l: Lang) => void;
+  t: TDict;
 };
 
-const LangContext = createContext<LangContextShape | null>(null);
+const LanguageCtx = createContext<Ctx | null>(null);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  // idioma inicial
-  const [lang, setLang] = useState<LangKey>("en");
+export function LanguageProvider({
+  children,
+  translations: dict = translations,
+}: {
+  children: React.ReactNode;
+  translations?: typeof translations;
+}) {
+  const [lang, setLang] = useState<Lang>("en");
 
-  const value: LangContextShape = {
-    lang,
-    setLang,
-    t: translations[lang],
-  };
+  const value = useMemo<Ctx>(() => {
+    const t = dict[lang] as TDict;
+    return { lang, setLang, t };
+  }, [lang, dict]);
 
-  return <LangContext.Provider value={value}>{children}</LangContext.Provider>;
+  return <LanguageCtx.Provider value={value}>{children}</LanguageCtx.Provider>;
 }
 
 export function useLanguage() {
-  const ctx = useContext(LangContext);
-  if (!ctx) {
-    throw new Error("useLanguage must be used inside <LanguageProvider />");
-  }
+  const ctx = useContext(LanguageCtx);
+  if (!ctx) throw new Error("useLanguage must be used within LanguageProvider");
   return ctx;
 }
