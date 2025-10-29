@@ -7,7 +7,7 @@ import { LanguageProvider, useLanguage } from "./LanguageContext";
 import LanguageSelector from "./LanguageSelector";
 import MouseGlow from "./MouseGlow";
 
-/** ---------- HEADER (logo + linguagem + CTA) ---------- */
+/** ---------- HEADER ---------- */
 function Header() {
   const { t } = useLanguage();
 
@@ -60,7 +60,7 @@ function Header() {
           </span>
         </div>
 
-        {/* GLOBO + LANG + CTA */}
+        {/* LANG + CTA */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <LanguageSelector />
           <button
@@ -85,7 +85,7 @@ function Header() {
               ((e.currentTarget.style.transform = "translateY(0)"))
             }
           >
-            {t.startButton /* ex: "Start Building" */}
+            {t.startButton}
           </button>
         </div>
       </div>
@@ -93,23 +93,13 @@ function Header() {
   );
 }
 
-/** ---------- HERO / CONTEÚDO ---------- */
+/** ---------- HERO ---------- */
 function Hero() {
   const { t } = useLanguage();
 
-  // Fallback seguro: mesmo se o TS inferir shape antigo, o build não quebra
-  const safePromptLabel =
-    (t as any).promptLabel ?? "Tell Kodiah what to build:";
-
   return (
-    <main
-      style={{
-        position: "relative",
-        zIndex: 1,
-        color: "white",
-      }}
-    >
-      {/* Luz suave de fundo do hero */}
+    <main style={{ position: "relative", zIndex: 1, color: "white" }}>
+      {/* glow */}
       <div
         style={{
           position: "absolute",
@@ -124,14 +114,7 @@ function Hero() {
         }}
       />
 
-      <div
-        style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "48px 24px",
-        }}
-      >
-        {/* Headline */}
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "48px 24px" }}>
         <h1
           style={{
             fontSize: "56px",
@@ -150,7 +133,6 @@ function Hero() {
           {t.heroHeadline}
         </h1>
 
-        {/* Sub */}
         <p
           style={{
             marginTop: "8px",
@@ -184,7 +166,7 @@ function Hero() {
               color: "rgba(255,255,255,0.6)",
             }}
           >
-            {safePromptLabel}
+            {t.promptLabel}
           </label>
 
           <div style={{ display: "flex", gap: "10px" }}>
@@ -247,7 +229,6 @@ function Hero() {
             gap: "18px",
           }}
         >
-          {/* Card 1 */}
           <div
             style={{
               borderRadius: "16px",
@@ -261,12 +242,9 @@ function Hero() {
             <div style={{ fontWeight: 700, marginBottom: "6px" }}>
               {t.badgeAiTitle}
             </div>
-            <div style={{ color: "rgba(255,255,255,0.7)" }}>
-              {t.badgeAiDesc}
-            </div>
+            <div style={{ color: "rgba(255,255,255,0.7)" }}>{t.badgeAiDesc}</div>
           </div>
 
-          {/* Card 2 */}
           <div
             style={{
               borderRadius: "16px",
@@ -285,7 +263,6 @@ function Hero() {
             </div>
           </div>
 
-          {/* Card 3 */}
           <div
             style={{
               borderRadius: "16px",
@@ -305,7 +282,6 @@ function Hero() {
           </div>
         </div>
 
-        {/* Rodapé curtinho */}
         <div
           style={{
             marginTop: "42px",
