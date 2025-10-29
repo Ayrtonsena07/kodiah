@@ -3,8 +3,7 @@ export const translations = {
     heroHeadline: "Shape your vision into reality.",
     heroSub:
       "Tell Kodiah what you want. We build intelligent, connected applications — fast, reliable, and beautifully designed. No code needed.",
-    // ⬇ adicionamos promptLabel para evitar o erro
-    promptLabel: "Tell Kodiah what to build:",
+    promptLabel: "Tell Kodiah what to build:",            // ⬅️ AQUI
     promptPlaceholder: "Build me an appointment app that takes payments",
 
     badgeAiTitle: "Built with AI",
@@ -19,10 +18,7 @@ export const translations = {
       "Hosting, login, dashboard, payments. You don't just “test” — you launch.",
 
     footerTagline: "Kodiah — Intelligence has a new signature.",
-
-    // ⬇ use SEMPRE esta chave no botão
     startButton: "Start Building",
-    // ⬇ usado no seletor de idioma (se você mostrar a sigla)
     languageLabel: "EN",
   },
 
@@ -30,12 +26,11 @@ export const translations = {
     heroHeadline: "Dê forma à sua visão.",
     heroSub:
       "Fale pra Kodiah o que você quer. Nós construímos aplicativos inteligentes e conectados — rápido, confiável e com design impecável. Sem código.",
-    promptLabel: "Diga à Kodiah o que construir:",
+    promptLabel: "Diga à Kodiah o que construir:",         // ⬅️ AQUI
     promptPlaceholder: "Crie um app de agendamento que aceite pagamentos",
 
     badgeAiTitle: "Feito com IA",
-    badgeAiDesc:
-      "Você descreve o produto. A Kodiah rascunha em minutos.",
+    badgeAiDesc: "Você descreve o produto. A Kodiah rascunha em minutos.",
 
     badgeTeamTitle: "Refinado por humanos",
     badgeTeamDesc:
@@ -54,12 +49,11 @@ export const translations = {
     heroHeadline: "Convierte tu visión en realidad.",
     heroSub:
       "Dile a Kodiah lo que quieres. Creamos aplicaciones inteligentes y conectadas — rápido, confiable y con diseño impecable. Sin código.",
-    promptLabel: "Dile a Kodiah qué construir:",
+    promptLabel: "Dile a Kodiah qué construir:",           // ⬅️ AQUI
     promptPlaceholder: "Crea una app de reservas que acepte pagos",
 
     badgeAiTitle: "Creado con IA",
-    badgeAiDesc:
-      "Describes el producto. Kodiah lo redacta en minutos.",
+    badgeAiDesc: "Describes el producto. Kodiah lo redacta en minutos.",
 
     badgeTeamTitle: "Perfeccionado por humanos",
     badgeTeamDesc:
