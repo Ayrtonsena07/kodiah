@@ -1,13 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
-
 import { LanguageProvider, useLanguage } from "./LanguageContext";
 import LanguageSelector from "./LanguageSelector";
 import MouseGlow from "./MouseGlow";
 
-/** ---------- HEADER ---------- */
 function Header() {
   const { t } = useLanguage();
 
@@ -19,7 +16,7 @@ function Header() {
         background: "rgba(0,0,0,0.3)",
         backdropFilter: "blur(12px)",
         position: "relative",
-        zIndex: 10,
+        zIndex: 10, // acima do glow
       }}
     >
       <div
@@ -34,7 +31,7 @@ function Header() {
         }}
       >
         {/* LOGO + NOME */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <Image
             src="/kodiah-logo.png"
             alt="Kodiah Logo"
@@ -60,32 +57,36 @@ function Header() {
           </span>
         </div>
 
-        {/* LANG + CTA */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        {/* Idiomas + CTA */}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <LanguageSelector />
           <button
+            type="button"
             style={{
               all: "unset",
-              cursor: "pointer",
               background:
-                "linear-gradient(180deg, rgba(255,222,141,1) 0%, rgba(230,170,60,1) 100%)",
-              color: "#1b1404",
+                "radial-gradient(120% 120% at 50% 0, #f6e27a 0%, #e2b84b 55%, #c7922f 100%)",
+              color: "#1a1205",
               fontWeight: 600,
-              fontSize: "14px",
               padding: "10px 16px",
-              borderRadius: "12px",
+              borderRadius: "999px",
+              cursor: "pointer",
               boxShadow:
-                "0 8px 30px rgba(255,207,92,0.25), 0 2px 8px rgba(0,0,0,0.35)",
-              transition: "transform .12s ease",
+                "0 2px 0 rgba(0,0,0,0.4), 0 10px 28px rgba(246,226,122,0.25)",
+              transition: "transform .08s ease, box-shadow .12s ease",
             }}
             onMouseDown={(e) =>
-              ((e.currentTarget.style.transform = "translateY(1px)"))
+              ((e.currentTarget.style.transform = "translateY(1px)"),
+              (e.currentTarget.style.boxShadow =
+                "0 1px 0 rgba(0,0,0,0.5), 0 6px 18px rgba(246,226,122,0.2)"))
             }
             onMouseUp={(e) =>
-              ((e.currentTarget.style.transform = "translateY(0)"))
+              ((e.currentTarget.style.transform = "translateY(0)"),
+              (e.currentTarget.style.boxShadow =
+                "0 2px 0 rgba(0,0,0,0.4), 0 10px 28px rgba(246,226,122,0.25)"))
             }
           >
-            {t.startButton}
+            {t.startButton /* ex: "Start Building" */}
           </button>
         </div>
       </div>
@@ -93,116 +94,108 @@ function Header() {
   );
 }
 
-/** ---------- HERO ---------- */
 function Hero() {
   const { t } = useLanguage();
 
   return (
-    <main style={{ position: "relative", zIndex: 1, color: "white" }}>
-      {/* glow */}
-      <div
-        style={{
-          position: "absolute",
-          top: "-80px",
-          left: "-80px",
-          right: "-80px",
-          height: "420px",
-          background:
-            "radial-gradient(800px 220px at 45% 30%, rgba(255,214,115,0.12), transparent 70%)",
-          filter: "blur(20px)",
-          pointerEvents: "none",
-        }}
-      />
+    <main
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        background:
+          "radial-gradient(1200px 600px at 30% 10%, rgba(246,226,122,0.08) 0, rgba(0,0,0,0) 45%), #0d0f14",
+        minHeight: "calc(100dvh - 72px)",
+        color: "white",
+      }}
+    >
+      <MouseGlow />
 
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "48px 24px" }}>
+      <section
+        style={{
+          maxWidth: "1180px",
+          margin: "0 auto",
+          padding: "56px 24px 56px",
+        }}
+      >
+        {/* Headline */}
         <h1
           style={{
             fontSize: "56px",
             lineHeight: 1.05,
-            letterSpacing: "-0.5px",
-            margin: 0,
-            marginBottom: "18px",
             fontWeight: 800,
+            letterSpacing: "-0.02em",
+            margin: "18px 0 12px",
             background:
-              "linear-gradient(180deg, #ffecb3 0%, #ffd15a 60%, #e7b23b 100%)",
+              "linear-gradient(180deg, #f6e27a 0%, #d5c274 12%, #a9a29a 60%, #dcdcdc 100%)",
             WebkitBackgroundClip: "text",
-            color: "transparent",
-            textShadow: "0 12px 60px rgba(255,212,82,0.15)",
+            WebkitTextFillColor: "transparent",
+            textShadow: "0 10px 68px rgba(246,226,122,0.12)",
+            maxWidth: "820px",
           }}
         >
           {t.heroHeadline}
         </h1>
 
+        {/* Subhead */}
         <p
           style={{
-            marginTop: "8px",
-            marginBottom: "28px",
+            marginTop: "12px",
             color: "rgba(255,255,255,0.82)",
             fontSize: "18px",
+            lineHeight: 1.55,
             maxWidth: "760px",
           }}
         >
           {t.heroSub}
         </p>
 
-        {/* Prompt */}
+        {/* Prompt + botão */}
         <div
           style={{
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(255,255,255,0.06)",
+            marginTop: "28px",
+            background: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "16px",
-            padding: "18px",
-            maxWidth: "780px",
-            boxShadow:
-              "0 35px 120px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.05)",
+            padding: "14px",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
+            maxWidth: "760px",
           }}
         >
-          <label
-            htmlFor="prompt"
+          <div
             style={{
-              display: "block",
-              marginBottom: "8px",
-              fontSize: "13px",
-              color: "rgba(255,255,255,0.6)",
+              display: "grid",
+              gridTemplateColumns: "1fr auto",
+              gap: "12px",
+              alignItems: "center",
             }}
           >
-            {t.promptLabel}
-          </label>
-
-          <div style={{ display: "flex", gap: "10px" }}>
             <input
-              id="prompt"
+              aria-label="Prompt"
               placeholder={t.promptPlaceholder}
               style={{
-                flex: 1,
-                height: "44px",
+                all: "unset",
+                background: "rgba(0,0,0,0.5)",
+                border: "1px solid rgba(255,255,255,0.06)",
                 borderRadius: "12px",
-                border: "1px solid rgba(255,255,255,0.08)",
-                background: "rgba(0,0,0,0.35)",
+                padding: "14px 16px",
                 color: "white",
-                padding: "0 14px",
-                outline: "none",
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04)",
+                fontSize: "15px",
               }}
             />
 
             <button
+              type="button"
               style={{
                 all: "unset",
-                cursor: "pointer",
-                borderRadius: "12px",
                 background:
-                  "linear-gradient(180deg, rgba(255,222,141,1) 0%, rgba(230,170,60,1) 100%)",
-                color: "#1b1404",
-                padding: "0 18px",
+                  "radial-gradient(140% 140% at 50% 0, #f6e27a 0%, #e2b84b 55%, #c7922f 100%)",
+                color: "#1a1205",
                 fontWeight: 700,
-                fontSize: "14px",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                minWidth: "112px",
+                padding: "12px 18px",
+                borderRadius: "12px",
+                cursor: "pointer",
                 boxShadow:
-                  "0 8px 30px rgba(255,207,92,0.25), 0 2px 8px rgba(0,0,0,0.35)",
+                  "0 2px 0 rgba(0,0,0,0.4), 0 10px 28px rgba(246,226,122,0.22)",
               }}
             >
               Generate
@@ -212,105 +205,68 @@ function Hero() {
           <div
             style={{
               marginTop: "10px",
-              fontSize: "12px",
-              color: "rgba(255,255,255,0.5)",
+              color: "rgba(255,255,255,0.55)",
+              fontSize: "13px",
+              paddingLeft: "2px",
             }}
           >
             Private beta — limited seats.
           </div>
         </div>
 
-        {/* Cards */}
+        {/* Badges */}
         <div
           style={{
             marginTop: "28px",
             display: "grid",
-            gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-            gap: "18px",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "16px",
+            maxWidth: "980px",
           }}
         >
-          <div
-            style={{
-              borderRadius: "16px",
-              background:
-                "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))",
-              border: "1px solid rgba(255,255,255,0.07)",
-              padding: "18px",
-              boxShadow: "0 25px 80px rgba(0,0,0,0.35)",
-            }}
-          >
-            <div style={{ fontWeight: 700, marginBottom: "6px" }}>
-              {t.badgeAiTitle}
+          {[ // conteúdo dos cards
+            { title: t.badgeAiTitle, desc: t.badgeAiDesc },
+            { title: t.badgeTeamTitle, desc: t.badgeTeamDesc },
+            { title: t.badgeLaunchTitle, desc: t.badgeLaunchDesc },
+          ].map((b, i) => (
+            <div
+              key={i}
+              style={{
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: "16px",
+                padding: "16px",
+                boxShadow: "0 10px 40px rgba(0,0,0,0.25)",
+              }}
+            >
+              <div style={{ fontWeight: 700, marginBottom: "6px" }}>
+                {b.title}
+              </div>
+              <div style={{ color: "rgba(255,255,255,0.8)" }}>{b.desc}</div>
             </div>
-            <div style={{ color: "rgba(255,255,255,0.7)" }}>{t.badgeAiDesc}</div>
-          </div>
-
-          <div
-            style={{
-              borderRadius: "16px",
-              background:
-                "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))",
-              border: "1px solid rgba(255,255,255,0.07)",
-              padding: "18px",
-              boxShadow: "0 25px 80px rgba(0,0,0,0.35)",
-            }}
-          >
-            <div style={{ fontWeight: 700, marginBottom: "6px" }}>
-              {t.badgeTeamTitle}
-            </div>
-            <div style={{ color: "rgba(255,255,255,0.7)" }}>
-              {t.badgeTeamDesc}
-            </div>
-          </div>
-
-          <div
-            style={{
-              borderRadius: "16px",
-              background:
-                "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))",
-              border: "1px solid rgba(255,255,255,0.07)",
-              padding: "18px",
-              boxShadow: "0 25px 80px rgba(0,0,0,0.35)",
-            }}
-          >
-            <div style={{ fontWeight: 700, marginBottom: "6px" }}>
-              {t.badgeLaunchTitle}
-            </div>
-            <div style={{ color: "rgba(255,255,255,0.7)" }}>
-              {t.badgeLaunchDesc}
-            </div>
-          </div>
+          ))}
         </div>
 
+        {/* Rodapé curto */}
         <div
           style={{
-            marginTop: "42px",
+            marginTop: "28px",
+            color: "rgba(255,255,255,0.65)",
             fontSize: "13px",
-            color: "rgba(255,255,255,0.55)",
           }}
         >
           {t.footerTagline}
         </div>
-      </div>
+      </section>
     </main>
   );
 }
 
-/** ---------- ROOT ---------- */
 export default function ClientRoot() {
   return (
     <LanguageProvider>
-      <div
-        style={{
-          minHeight: "100dvh",
-          background:
-            "radial-gradient(1600px 900px at 50% -200px, #1a1a22 0%, #0a0b10 65%)",
-        }}
-      >
-        <MouseGlow />
-        <Header />
-        <Hero />
-      </div>
+      <Header />
+      <Hero />
     </LanguageProvider>
   );
 }
