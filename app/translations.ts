@@ -1,25 +1,14 @@
-// app/translations.ts
-
 export const translations = {
   en: {
-    // Hero
     heroHeadline: "Shape your vision into reality.",
     heroSub:
       "Tell Kodiah what you want. We build intelligent, connected applications — fast, reliable, and beautifully designed. No code needed.",
-
-    // Label acima do input
+    // ⬇ adicionamos promptLabel para evitar o erro
     promptLabel: "Tell Kodiah what to build:",
-
-    // Placeholder dentro do input
     promptPlaceholder: "Build me an appointment app that takes payments",
 
-    // Botão de gerar
-    generateButton: "Generate",
-
-    // Cards
     badgeAiTitle: "Built with AI",
-    badgeAiDesc:
-      "You describe the product. Kodiah drafts it in minutes.",
+    badgeAiDesc: "You describe the product. Kodiah drafts it in minutes.",
 
     badgeTeamTitle: "Refined by humans",
     badgeTeamDesc:
@@ -29,26 +18,20 @@ export const translations = {
     badgeLaunchDesc:
       "Hosting, login, dashboard, payments. You don't just “test” — you launch.",
 
-    // Rodapé
     footerTagline: "Kodiah — Intelligence has a new signature.",
 
-    // Botão header “call to action”
+    // ⬇ use SEMPRE esta chave no botão
     startButton: "Start Building",
-
-    // Coisa do seletor de idioma
+    // ⬇ usado no seletor de idioma (se você mostrar a sigla)
     languageLabel: "EN",
   },
 
   pt: {
     heroHeadline: "Dê forma à sua visão.",
     heroSub:
-      "Fala pra Kodiah o que você quer. A gente constrói aplicativos inteligentes e conectados — rápido, confiável e com design impecável. Sem código.",
-
+      "Fale pra Kodiah o que você quer. Nós construímos aplicativos inteligentes e conectados — rápido, confiável e com design impecável. Sem código.",
     promptLabel: "Diga à Kodiah o que construir:",
-    promptPlaceholder:
-      "Crie um app de agendamento que aceite pagamentos",
-
-    generateButton: "Gerar",
+    promptPlaceholder: "Crie um app de agendamento que aceite pagamentos",
 
     badgeAiTitle: "Feito com IA",
     badgeAiDesc:
@@ -63,9 +46,7 @@ export const translations = {
       "Hosting, login, dashboard, cobrança. Você não só “testa” — você lança.",
 
     footerTagline: "Kodiah — Inteligência tem uma nova assinatura.",
-
     startButton: "Começar agora",
-
     languageLabel: "PT",
   },
 
@@ -73,12 +54,8 @@ export const translations = {
     heroHeadline: "Convierte tu visión en realidad.",
     heroSub:
       "Dile a Kodiah lo que quieres. Creamos aplicaciones inteligentes y conectadas — rápido, confiable y con diseño impecable. Sin código.",
-
     promptLabel: "Dile a Kodiah qué construir:",
-    promptPlaceholder:
-      "Crea una app de reservas que acepte pagos",
-
-    generateButton: "Generar",
+    promptPlaceholder: "Crea una app de reservas que acepte pagos",
 
     badgeAiTitle: "Creado con IA",
     badgeAiDesc:
@@ -93,13 +70,10 @@ export const translations = {
       "Hosting, login, panel, pagos. No es sólo una demo — es tu producto.",
 
     footerTagline: "Kodiah — La inteligencia tiene una nueva firma.",
-
     startButton: "Empezar ahora",
-
     languageLabel: "ES",
   },
 };
 
-// Tipagem de apoio (garante que ClientRoot.tsx entenda o formato)
-export type LocaleKey = keyof typeof translations;
-export type LocaleStrings = (typeof translations)[LocaleKey];
+export type Lang = keyof typeof translations;
+export type TDict = (typeof translations)["en"];
