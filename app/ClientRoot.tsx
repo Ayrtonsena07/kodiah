@@ -1,13 +1,13 @@
 import React from "react";
 
 interface ClientRootProps {
-  promptLabel?: string;
+ 
   children?: React.ReactNode;
 }
 
-const ClientRoot: React.FC<ClientRootProps> = ({ children, promptLabel }) => (
+const ClientRoot: React.FC<ClientRootProps> = ({ children }) => (
   <>
-    {promptLabel ? <label>{promptLabel}</label> : null}
+    
     {children}
   </>
 );
